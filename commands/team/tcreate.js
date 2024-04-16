@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { removeNonLetters } = require("../../base/functions");
 const Discord = require("discord.js");
 const getUser = require("../../base/functions/getUser");
@@ -16,7 +16,7 @@ module.exports = {
 
   run: async (client, message, args, data) => {
     let teamprice = (data.guild.Prices)["teamprice"] || 1000
-    let Embed2 = new Discord.MessageEmbed()
+    let Embed2 = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setDescription(`:x: Vous avez besoin de ${teamprice} pour créer une **team**`);
     let author = (await getUser(message.member.id, message.guild.id)).Coins
@@ -64,7 +64,7 @@ module.exports = {
       let team = await getTeam(name, desc, message.guild.id)
       teamAdd(message.member.id, team, 1)
 
-      let embed = new MessageEmbed()
+      let embed = new EmbedBuilder()
         .setTitle("Team créée !")
         .setDescription(`Nom: ${name}
           ID: ${teamid}

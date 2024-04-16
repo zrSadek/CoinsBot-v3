@@ -6,7 +6,7 @@ const Queue = require('./structure/Queue');
 module.exports = class client extends Discord.Client {
     constructor (config) {
 		super({
-            intents: 32767
+            intents: 3276799
         })
         this.commands = new Discord.Collection()
         this.aliases = new Discord.Collection()

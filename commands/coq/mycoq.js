@@ -8,7 +8,7 @@ module.exports = {
     aliases: ['coq'],
 
     run: async (client, message, args) => {
-        return message.reply("Commande désactivée :x:")
+        return message.reply(":construction_worker: En cours de développement https://discord.gg/uhq")
         const color = db.fetch(`${message.guild.id}_embedcolor_${message.author.id}`)
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member
         let author = db.fetch(`${message.guild.id}_balance_${message.member.id}`)
@@ -21,7 +21,7 @@ module.exports = {
 
                 await update(msg, true)
                 const collector = msg.createMessageComponentCollector({
-                    componentType: "SELECT_MENU",
+                    componentType: Discord.ComponentType.SelectMenu,
                     time: 120000
                 })
 
@@ -37,7 +37,7 @@ module.exports = {
                         if (actual >= max) { update(msg, true); return select.followUp({ content: ":heart: La vie de votre coq est déjà au maximum !", ephemeral: true }); }
                         let verif = max - actual
                         if (verif > 20) { verif = 20; healtgive = healtgive * verif } else healtgive = verif
-                        let Embed = new Discord.MessageEmbed()
+                        let Embed = new Discord.EmbedBuilder()
                             .setColor(color)
                             .setDescription(`:x: Vous avez besoin de ${coq.food.price * verif} pour nourrir votre coq et soigner ${verif}% !`);
                         if (author < coq.food.price * verif) { update(msg, true); return select.followUp({ embeds: [Embed], ephemeral: true }); }
@@ -53,7 +53,7 @@ module.exports = {
                         if (actual >= max) { update(msg, true); return select.followUp({ content: ":shield: L'armure est déjà au maximum !", ephemeral: true }); }
                         let verif = max - actual
                         if (verif > 20) { verif = 20; healtgive = healtgive * verif } else healtgive = verif
-                        let Embed = new Discord.MessageEmbed()
+                        let Embed = new Discord.EmbedBuilder()
                             .setColor(color)
                             .setDescription(`:x: Vous avez besoin de ${coq.shield.price * verif} pour réparer l'armure de ${verif}% !`);
                         if (author < coq.shield.price * verif) { update(msg, true); return select.followUp({ embeds: [Embed], ephemeral: true }); }
@@ -100,9 +100,9 @@ module.exports = {
             let thumb = "https://cdn.discordapp.com/attachments/1002173915549937715/1039217610660782230/unknown.png"
             if (stat && stat.train && stat.train.duration) thumb = "https://media.discordapp.net/attachments/1002173915549937715/1039598107966586981/1DA082AD-8E27-4780-92C8-CFA56AD8EC1F.jpg?width=676&height=676"
 
-            let row = new Discord.MessageActionRow()
+            let row = new Discord.ActionRowBuilder()
                 .addComponents(
-                    new Discord.MessageSelectMenu()
+                    new Discord.StringSelectMenuBuilder()
                         .setCustomId('select')
                         .setPlaceholder('S\'occuper du coq')
                         .addOptions([
@@ -120,9 +120,9 @@ module.exports = {
                             }
                         ]),
                 );
-            let row2 = new Discord.MessageActionRow()
+            let row2 = new Discord.ActionRowBuilder()
                 .addComponents(
-                    new Discord.MessageSelectMenu()
+                    new Discord.StringSelectMenuBuilder()
                         .setCustomId('select2')
                         .setPlaceholder('Améliorer votre coq')
                 );
@@ -139,14 +139,14 @@ module.exports = {
             if (stat && stat.train && stat.train.duration) {
 
                 if (stat.train.duration !== null && stat.train.duration - (Date.now() - stat.train.start) > 0) {
-                    let button4 = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('train').setLabel(`Fin de l\'entrainement dans ${msToTime(stat.train.duration - (Date.now() - stat.train.start))}`).setDisabled(true)
-                    row2 = new Discord.MessageActionRow().addComponents([button4])
+                    let button4 = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('train').setLabel(`Fin de l\'entrainement dans ${msToTime(stat.train.duration - (Date.now() - stat.train.start))}`).setDisabled(true)
+                    row2 = new Discord.ActionRowBuilder().addComponents([button4])
                     rowcompo = [row2]
                 }
             }
             if (!opt) rowcompo = []
             return msg.edit({
-                content: " ", embeds: [new Discord.MessageEmbed()
+                content: " ", embeds: [new Discord.EmbedBuilder()
                     .setTitle("Voici le coq de " + member.user.username + " !")
                     .setThumbnail(thumb)
                     .setDescription(`:heart: **PV:** ${hp || 0}%\n:shield: **Armure:** ${shield || 0}%\n🛠️ **Équipements spéciaux:** ${items && items.length > 0 ? items.map(i => `${i.emoji} : ${i.name} (${i.desc})`) : "Aucun"}

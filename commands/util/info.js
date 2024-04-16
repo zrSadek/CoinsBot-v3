@@ -35,7 +35,7 @@ module.exports = {
     let so = db.fetch(`voiceactivity_${message.guild.id}`)
     if (!so) { so = "Désactivé" } else { so = "Activé" }
 
-    let moneyEmbed = new Discord.MessageEmbed()
+    let moneyEmbed = new Discord.EmbedBuilder()
       .setColor(color)
       .setTitle(`Paramètres du serveur ${message.guild.name}`)
       .setDescription(`**Work:** \nMaximum: ${wmaximum}\nMinimum: ${wminimum}\n\n**Daily**\nMaximum: ${dmaximum}\nMinimum: ${dminimum}\n\n> Vous gagnez ${voicegain ? voicegain : "rien"} coins toutes les 15 minutes lorsque vous êtes en vocal et ${streamgain ? streamgain : "rien"} lorsque vous êtes en stream et ${camgain ? camgain : "rien"} lorsque vous mettez votre caméra ( ${so} ) \n\nVous gagnez ${xpmsg}xp par message et ${xpvc}xp toutes les 15 minutes en vocal !`)

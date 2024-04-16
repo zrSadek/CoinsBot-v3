@@ -16,13 +16,13 @@ module.exports = {
         let minimum = gains.gfmin || -400
         let maximum = gains.gfmax || 500
 
-        let button1 = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('1').setEmoji("1️⃣")
-        let button2 = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('2').setEmoji("2️⃣")
-        let button3 = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('3').setEmoji("3️⃣")
+        let button1 = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('1').setEmoji("1️⃣")
+        let button2 = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('2').setEmoji("2️⃣")
+        let button3 = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('3').setEmoji("3️⃣")
 
 
-        let button_row = new Discord.MessageActionRow().addComponents([button1, button2, button3])
-        let embed5 = new Discord.MessageEmbed()
+        let button_row = new Discord.ActionRowBuilder().addComponents([button1, button2, button3])
+        let embed5 = new Discord.EmbedBuilder()
             .setTitle(`Trois cartes sont à votre disposition...`)
             .setColor(data.color)
             .setDescription(`Choisissez une des cartes ci-dessous !\nEt tentez de gagner entre \`${minimum} coins\` et \`${maximum} coins\` !\n:warning: Elles expirent dans <t:${Date.parse(new Date(Date.now() + 60000)) / 1000}:R> !`)
@@ -30,7 +30,7 @@ module.exports = {
             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
         message.reply({ embeds: [embed5], components: [button_row], allowedMentions: { repliedUser: false } }).then(async msg => {
             const collector = msg.createMessageComponentCollector({
-                componentType: "BUTTON",
+                componentType: Discord.ComponentType.Button,
                 time: 60000
             })
 
@@ -45,8 +45,8 @@ module.exports = {
                 let btn3 = between(minimum, maximum)
                 if (gain > 0) {
                     await addCoins(message.member.id, message.guild.id, gain, "coins")
-                    let embed = new Discord.MessageEmbed()
-                        .setColor("GREEN")
+                    let embed = new Discord.EmbedBuilder()
+                        .setColor("Green")
                         .setDescription(`:gift: **Vous venez de gagner \`${gain} coins\` !**`)
                         .addFields(
                             { name: 'Carte 1', value: parseInt(i.customId) === 1 ? `\`${gain} coins\`` : `\`${btn1} coins\`` },
@@ -56,11 +56,11 @@ module.exports = {
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
                     msg.edit({ embeds: [embed], components: [] }).catch()
                     //db.push(`${message.guild.id}_${message.author.id}_mail`, `<t:${Date.parse(new Date(Date.now())) / 1000}:d>) :green_circle: Votre \`gift\` vous a rapporté \`\`${gain} coins\`\``)
-                    return wlog(message.author, "GREEN", message.guild, `${message.author.tag} vient de gagner \`\`${gain} coins\`\``, "Gift")
+                    return wlog(message.author, "Green", message.guild, `${message.author.tag} vient de gagner \`\`${gain} coins\`\``, "Gift")
                 } else if (gain < 0) {
                     await removeCoins(message.member.id, message.guild.id, -gain, "coins")
-                    let embed = new Discord.MessageEmbed()
-                        .setColor("RED")
+                    let embed = new Discord.EmbedBuilder()
+                        .setColor("Red")
                         .setDescription(`:gift: **Vous venez de perdre \`${gain} coins\` !**`)
                         .addFields(
                             { name: 'Carte 1', value: parseInt(i.customId) === 1 ? `\`${gain} coins\`` : `\`${btn1} coins\`` },
@@ -70,10 +70,10 @@ module.exports = {
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
                     msg.edit({ embeds: [embed], components: [] }).catch()
                     //db.push(`${message.guild.id}_${message.author.id}_mail`, `<t:${Date.parse(new Date(Date.now())) / 1000}:d>) :red_circle: Votre \`gift\` vous a fait perdre \`\`${gain} coins\`\``)
-                    wlog(message.author, "RED", message.guild, `${message.author.tag} vient de perdre \`\`${gain} coins\`\``, "Gift")
+                    wlog(message.author, "Red", message.guild, `${message.author.tag} vient de perdre \`\`${gain} coins\`\``, "Gift")
                 } else {
-                    let embed = new Discord.MessageEmbed()
-                        .setColor("BLACK")
+                    let embed = new Discord.EmbedBuilder()
+                        .setColor("Black")
                         .setDescription(`:gift: **Vous venez de tomber sur 0 (cheh) !**`)
                         .addFields(
                             { name: 'Carte 1', value: parseInt(i.customId) === 1 ? `\`${gain} coins\`` : `\`${btn1} coins\`` },
@@ -82,7 +82,7 @@ module.exports = {
                         )
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
                     msg.edit({ embeds: [embed], components: [] }).catch()
-                    wlog(message.author, "BLACK", message.guild, `${message.author.tag} vient de faire 0 (cheh)`, "Gift")
+                    wlog(message.author, "Black", message.guild, `${message.author.tag} vient de faire 0 (cheh)`, "Gift")
                 }
 
             })

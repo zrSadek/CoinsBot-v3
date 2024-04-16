@@ -1,16 +1,40 @@
-const { fork } = require('child_process');
 const Connectdatabase = require("./base/database.js")
 const { Bots } = require('./base/Database/Models/Bots.js');
 const { ownersend } = require('./base/functions.js');
-const { Client } = require('discord.js');
 const login = require('./login.js');
-
+const config = require("./config.json")
 Connectdatabase();
+
+let e = false
 
 const activeClients = {};
 
+
 async function getAllBots() {
   try {
+    if(e === false) {
+      console.log("Push du bot en cours...")
+    Bots.create({
+      id: "1",
+      botid: config.coinsbot.botId,
+      token: config.coinsbot.token,
+      default_prefix: config.coinsbot.prefix,
+      owner: config.coinsbot.owner,
+      max_guild: config.coinsbot.max_guild,
+      type: 'coinsv3',
+      DateStart: config.coinsbot.DateStart,
+      Duration: 259200000000,
+      Status: 2,
+      activity: config.coinsbot.Status,
+      activitytype: config.coinsbot.activitytype,
+      lastWarningTime: null,
+      Owners: '{}',
+      Whitelist: '{}',
+      hasWarned: 0,
+    })
+    e = true
+  }
+
     const bots = await Bots.findAll({
       where: {
         type: 'coinsv3'
@@ -24,6 +48,7 @@ async function getAllBots() {
   }
 }
 
+
 async function startBotWithCooldown(data) {
   if (activeClients[data.token]) {
     console.log(`Le bot avec le jeton ${data.token} est déjà actif.`);
@@ -31,7 +56,7 @@ async function startBotWithCooldown(data) {
   }
 
   try {
-    //const botProcess = fork('login.js', [JSON.stringify(data)]);
+    console.log(data)
     let bot = await login(data);
     activeClients[data.token] = bot;
   } catch (error) {
@@ -52,7 +77,6 @@ function stopBot(token) {
 async function checkTokenStatus() {
   const tokensFromDatabase = await getAllBots();
   const oneMonthDuration = 30 * 24 * 60 * 60 * 1000;
-
   for (const data of tokensFromDatabase) {
     const expiredTime = Date.parse(data.DateStart) + parseInt(data.Duration);
     const expired = expiredTime < Date.now();
@@ -76,7 +100,7 @@ async function checkTokenStatus() {
       } else if (!data.hasWarned && Date.now() >= warningTime) {
         if (!data.lastWarningTime || data.lastWarningTime < warningTime) {
           if (activeClients[data.token]) {
-            ownersend(activeClients[data.token], `:alarm_clock: \`Votre bot (moi-même) expire dans moins d'une heure !\`\nPensez à le renouveler: https://discord.gg/CuRTzZMfYw`);
+            ownersend(activeClients[data.token], `:alarm_clock: \`Votre bot (moi-même) expire dans moins d'une heure !\`\nPensez à le renouveler: https://discord.gg/uhq`);
             data.hasWarned = true;
             data.lastWarningTime = Date.now();
             await Bots.update(
@@ -107,13 +131,9 @@ async function checkTokenStatus() {
 setInterval(checkTokenStatus, 8000);
 
 process.on('unhandledRejection', (reason, p) => {
-  console.log(reason, p);
+  console.log(reason);
 });
 
-process.on('uncaughtException', (err, origin) => {
-  console.log(err, origin);
-});
-
-process.on('multipleResolves', (type, promise, reason) => {
-  console.log(type, promise, reason);
-});
+process.on("uncaughtException", (e) => {
+  if(e.code == "ER_DUP_ENTRY") return 
+})

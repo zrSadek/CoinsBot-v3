@@ -4,7 +4,7 @@ const getUser = require("./getUser");
 module.exports = async (UserId, GuildId, minerais, Value, addMinerais = true) => {
     let user = await getUser(UserId, GuildId)
     Value = parseInt(Value)
-    const currentMinerais = user.Minerais || {}
+    const currentMinerais = JSON.parse(user.Minerais) || {}
 
     if (addMinerais) {
         currentMinerais[minerais] = (currentMinerais[minerais] || 0) + Value

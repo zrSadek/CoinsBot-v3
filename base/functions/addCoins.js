@@ -20,6 +20,7 @@ module.exports = async (UserId, GuildId, value, type) => {
             user.Rep = updatedCoins;
         } else {
             const updatedCoins = parseInt(user.Coins) + parseInt(value);
+            console.log(updatedCoins)
             user.Coins = updatedCoins;
         }
 

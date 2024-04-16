@@ -18,7 +18,7 @@ module.exports = {
             let cool = await setCooldown(message, data.color, user.id, message.guild.id, "antirob", 7200000, true, true)
                 if (!cool[0] && cool !== true && cool.length) {
 
-                    let timeEmbed = new Discord.MessageEmbed()
+                    let timeEmbed = new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`:shield: Vous ne pouvez pas tuer cet utilisateur\n\n Son anti-rob prendra fin dans ${cool[1]} `)
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -26,7 +26,7 @@ module.exports = {
                 } else {
 
 
-                    let moneyEmbed2 = new Discord.MessageEmbed()
+                    let moneyEmbed2 = new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`:x: **${user.user.username}** vous ne gagnerez rien si vous tuez cette personne !`)
                         .setFooter({ text: `${message.member.user.username}`, iconURL: `${message.member.user.displayAvatarURL({ dynamic: true })}` });
@@ -37,7 +37,7 @@ module.exports = {
                     if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "kill", 18000000))) return
                     if (checkif === 2) {
                         return message.channel.send({
-                            embeds: [new Discord.MessageEmbed()
+                            embeds: [new Discord.EmbedBuilder()
                                 .setColor(data.color)
                                 .setDescription(`:bank: Vous n'avez pas réussi à tuer **${user.user.username}** !`)
                                 .setImage('http://acidcow.com/pics/20140616/robbers_losers_04.gif')
@@ -51,7 +51,7 @@ module.exports = {
                     let random = between(1, 2)
 
 
-                    let embed = new Discord.MessageEmbed()
+                    let embed = new Discord.EmbedBuilder()
                         .setDescription(`:white_check_mark: Vous avez tué ${user} et repartez avec \`${random} rep\` en plus`)
                         .setColor(data.color)
                         .setImage('https://c.tenor.com/F__GSvFsf20AAAAC/among-us-kill.gif')
@@ -65,7 +65,7 @@ module.exports = {
                 };
         } else {
             return message.channel.send({
-                embeds: [new Discord.MessageEmbed()
+                embeds: [new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:x: Vous devez être **tueur** pour utiliser cette commande !`)]
             })

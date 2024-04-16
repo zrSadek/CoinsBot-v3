@@ -1,4 +1,4 @@
-const { owner, wl, webhook } = require("../base/functions");
+const { wl } = require("../base/functions");
 const userTeam = require('../base/functions/teams/userTeam');
 const teamRemove = require('../base/functions/teams/teamRemove');
 const { Bots } = require('../base/Database/Models/Bots');

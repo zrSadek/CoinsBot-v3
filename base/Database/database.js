@@ -2,27 +2,27 @@ const sequelize = require("sequelize");
 
 const BotsInstance = new sequelize.Sequelize({
   dialect: "mysql",
-  host: "217.182.253.132",
+  host: "127.0.0.1",
   port: 3306,
-  username: "millenium",
-  password: "AWJzuR7QDbY4Lx5q",
-  database: "manager",
+  username: "root",
+  //password: "AWJzuR7QDbY4Lx5q",
+  database: "managerCoins",
   logging: false,
   define: {
-      timestamps: true
+      timestamps: false
   }
 });
 
 const GuildsInstance = new sequelize.Sequelize({
   dialect: "mysql",
-  host: "217.182.253.132",
+  host: "127.0.0.1",
   port: 3306,
-  username: "millenium",
-  password: "AWJzuR7QDbY4Lx5q",
-  database: "coinsbot",
+  username: "root",
+  //password: "AWJzuR7QDbY4Lx5q",
+  database: "coinsbotLevrai",
   logging: false,
   define: {
-      timestamps: true
+      timestamps: false
   }
 });
 

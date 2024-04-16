@@ -41,7 +41,7 @@ module.exports = {
         }
       await data.guilds.update({ XP: ActualXP }, { where: { guildId: message.guild.id }});
 
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:small_orange_diamond: ${setting.description.replace("{PARAM}", args[1])}`);
 
@@ -51,7 +51,7 @@ module.exports = {
 
     return message.channel.send({
       embeds: [
-        new Discord.MessageEmbed()
+        new Discord.EmbedBuilder()
           .setTitle("Configuration de l'xp")
           .setThumbnail("https://cdn3.emoji.gg/emojis/1171-mc-xp.png")
           .setColor(data.color)

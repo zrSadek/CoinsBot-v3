@@ -9,7 +9,7 @@ module.exports = {
     aliases: ['cf'],
 
     run: async (client, message, args) => {
-        return message.reply(":x: Commande désactivée")
+        return message.reply(":construction_worker: En cours de développement https://discord.gg/uhq")
         const color = db.fetch(`${message.guild.id}_embedcolor_${message.author.id}`)
         let member = message.member
         let author = db.fetch(`${message.guild.id}_balance_${message.member.id}`)
@@ -28,7 +28,7 @@ module.exports = {
             if (stat2.train.duration !== null && stat2.train.duration - (Date.now() - stat2.train.start) > 0) return message.reply(":x: Son coq est en entraînement !")
         }
         let mise = args[1]
-        let moneymore = new Discord.MessageEmbed()
+        let moneymore = new Discord.EmbedBuilder()
             .setColor(color)
             .setDescription(`:x: Vous n'avez pas assez !`);
 
@@ -47,12 +47,12 @@ module.exports = {
             }, 20000);
             return message.channel.send(`:x: Vous avez déjà lancé un jeu ! Veuillez attendre la fin de celui-ci !`)
         }
-        const row = new Discord.MessageActionRow()
+        const row = new Discord.ActionRowBuilder()
             .addComponents(
-                new Discord.MessageButton()
+                new Discord.ButtonBuilder()
                     .setCustomId('valide')
                     .setLabel('✅')
-                    .setStyle('SUCCESS'),
+                    .setStyle(Discord.ButtonStyle.Success),
             );
         message.channel.send({ content: `:question: <@${opponent.user.id}> acceptes-tu le duel de **Coq** avec une mise de ${mise} coins contre <@${message.author.id}> ?\n\n_Tu as 30 secondes pour accepter_`, components: [row] }).then(m => {
 
@@ -73,7 +73,7 @@ module.exports = {
             stat = db.fetch(`${message.guild.id}.${mister.id}.coq.statut`)
             coq = db.fetch(`${message.guild.id}.${mister.id}.coq`)
             msg.edit({
-                content: " ", embeds: [new Discord.MessageEmbed()
+                content: " ", embeds: [new Discord.EmbedBuilder()
                     .setTitle("Le coq gagnant est celui de " + mister.username + " !")
                     .setThumbnail(thumb)
                     .setDescription(`:heart: **PV:** ${coq.hp || 0}%\n:shield: **Armure:** ${coq.shield || 0}%\n🛠️ **Équipements spéciaux:** ${coq.items && coq.items.length > 0 ? coq.items.map(i => `${i.emoji} : ${i.name} (${i.desc})`) : "Aucun"}

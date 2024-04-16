@@ -14,9 +14,9 @@ module.exports = {
         let userDB = await getUser(message.member.id, message.guild.id);
         let author = userDB.Coins
 
-        const row = new Discord.MessageActionRow()
+        const row = new Discord.ActionRowBuilder()
             .addComponents(
-                new Discord.MessageSelectMenu()
+                new Discord.StringSelectMenuBuilder()
                     .setCustomId('select')
                     .setPlaceholder('Sélectionner un item à acheter')
             );
@@ -48,7 +48,7 @@ module.exports = {
             value: "wagon"
         }])
 
-        let Embed2 = new Discord.MessageEmbed()
+        let Embed2 = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle(`Voici la boutique du serveur ` + message.guild.name)
             .setDescription(`${shoparray.map(e => e).join("\n")}
@@ -58,7 +58,7 @@ module.exports = {
         message.reply({ embeds: [Embed2], components: [row] }).then(m => {
 
             const collector = m.createMessageComponentCollector({
-                componentType: "SELECT_MENU",
+                componentType: Discord.ComponentType.SelectMenu,
                 time: 30000
             })
             collector.on("collect", async (select) => {
@@ -69,7 +69,7 @@ module.exports = {
                     userDB = await getUser(message.member.id, message.guild.id);
                     author = parseInt(userDB.Coins)
                     if (value == "wagon") {
-                        let Embed2 = new Discord.MessageEmbed()
+                        let Embed2 = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:x: Vous avez besoin de ${wprice} pour acheter un **wagon**`);
                         if (author < wprice) {
@@ -77,7 +77,7 @@ module.exports = {
                             return message.reply({ embeds: [Embed2], allowedMentions: { repliedUser: false } })
                         }
                         let use = await addMinerais(message.author.id, message.guild.id, "wagon", 10, true)
-                        let Embed3 = new Discord.MessageEmbed()
+                        let Embed3 = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:white_check_mark: Vous avez acheté un **wagon** pour \`${wprice} coins\` !\nVous pouvez maintenant miner ${use.wagon} fois avant de devoir en racheter un !`)
                             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -87,7 +87,7 @@ module.exports = {
                         cb()
 
                     } else if (value == "antirob") {
-                        let Embed2 = new Discord.MessageEmbed()
+                        let Embed2 = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:x: Vous avez besoin de ${rprice} pour acheter un **anti rob**`);
                         if (author < rprice) {
@@ -98,7 +98,7 @@ module.exports = {
                         userDB.decrement('Coins', { by: rprice });
 
                         let timetime = msToTime(antirobduration);
-                        let embed5 = new Discord.MessageEmbed()
+                        let embed5 = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:white_check_mark: Vous avez acheté un **anti-rob**, vous avez ${timetime} d'anti-rob !\n`)
                             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -108,7 +108,7 @@ module.exports = {
                     } else {
                         let bat = items.bat
                         let price = data.guild.Prices[`${value}price`] || bat[value].price
-                        let Embed = new Discord.MessageEmbed()
+                        let Embed = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:x: Vous avez besoin de ${price} pour acheter le bâtiment **${value}**`);
                         if (author < price) {
@@ -129,7 +129,7 @@ module.exports = {
                         await data.users.update({ Batiments: bats }, { where: { primary: userDB.primary } });
                         //await userDB.decrement('Coins', { by: price });
                         await removeCoins(message.member.id, message.guild.id, price, "Coins")
-                        let Embed2 = new Discord.MessageEmbed()
+                        let Embed2 = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:white_check_mark: Vous avez acheté **${value}** pour \`${price} coins\``);
                         //db.push(`${message.guild.id}_${message.author.id}_mail`, `<t:${Date.parse(new Date(Date.now())) / 1000}:d>) :red_circle: Vous avez acheté un \`${value}\` pour \`\`${bat[value].price} coins\`\``)

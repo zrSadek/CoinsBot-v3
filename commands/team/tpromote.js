@@ -27,9 +27,9 @@ module.exports = {
 
       const memberData2 = finallb.find(([id]) => id === member.id);
       if (memberData2[1].rank === 2) {
-        let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('yes').setEmoji("✅").setLabel(`Oui je le veux`)
+        let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('yes').setEmoji("✅").setLabel(`Oui je le veux`)
 
-        let button_row = new Discord.MessageActionRow().addComponents([button_back])
+        let button_row = new Discord.ActionRowBuilder().addComponents([button_back])
 
         return message.channel.send({
           content: `:question: Êtes-vous sûr de vouloir donner la propriété de la team à ${member} ?`,
@@ -38,7 +38,7 @@ module.exports = {
         }).then(m => {
 
           const collector = m.createMessageComponentCollector({
-            componentType: "BUTTON",
+            componentType: Discord.ComponentType.Button,
             time: 30000
           })
           collector.on("collect", async (i) => {

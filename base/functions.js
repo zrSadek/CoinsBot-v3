@@ -94,7 +94,7 @@ module.exports = {
         }
 
         function sendstats(channel, card) {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setTitle(`${card.name}`)
                 .addFields([
                     { name: `Puissance`, value: `\`\`\`js\n${card.vie + card.defense + card.attaque}/150\`\`\`` },
@@ -105,8 +105,8 @@ module.exports = {
                 .setImage(card.avatar)
                 .setFooter({ text: `${actuale.length}/75 cards generated` });
 
-            let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId(`cardclaim-${card.name}`).setLabel("Récupérer la carte").setEmoji("🔘");
-            let button_row = new Discord.MessageActionRow().addComponents([button_back]);
+            let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId(`cardclaim-${card.name}`).setLabel("Récupérer la carte").setEmoji("🔘");
+            let button_row = new Discord.ActionRowBuilder().addComponents([button_back]);
             channel.send({ embeds: [embed], components: [button_row] });
         }
     },
@@ -190,7 +190,7 @@ module.exports = {
         let lchannel = guildDB.Logs["transaction"] || {}
         if (!lchannel) return;
         let asend = guild.channels.cache.get(lchannel)
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setAuthor({ name: user.username, iconURL: user.displayAvatarURL({ dynamic: true }) })
             .setTitle(command)
             .setDescription(msg ? msg : `${user.username} viens de gagner des coins`)
@@ -202,7 +202,7 @@ module.exports = {
     },
     webhook(error, message) {
         const webhook = new Discord.WebhookClient({ id: config.webhookerror.id, token: config.webhookerror.token })
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setAuthor({ name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
             .setDescription(`\`\`\`js\n${error}\`\`\``)
             .setColor('2F3136')

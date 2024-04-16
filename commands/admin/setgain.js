@@ -31,7 +31,7 @@ module.exports = {
         };
 
         if (!args[0]) {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setTitle(`:coin: Configuration des gains`)
                 .setColor(data.color)
                 .setDescription(`Pour changer le gain via les commandes débutants work et daily utilisez les commandes suivantes :\n\`${prefix}setgain <work/daily> <gain_minimum> <gain_maximum>\`
@@ -48,7 +48,7 @@ module.exports = {
 
         if (arg0 === 'vocal' || arg0 === 'voc') {
             if (!isNaN(args[1])) {
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setDescription(`:coin: Le gain des **membres en vocal** a été modifié en ${args[1]} toutes les 15 minutes`)
                     .setColor(data.color);
 
@@ -64,7 +64,7 @@ module.exports = {
                 delete ActualGains.voicegain;
                 await data.guilds.update({ Gains: ActualGains }, { where: { guildId: message.guild.id }});
 
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setDescription(`Le gain des membres en vocal a été **désactivé**`)
                     .setColor(data.color);
                 return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -87,7 +87,7 @@ module.exports = {
             ActualGains[gainKey[1]] = max;
             await data.guilds.update({ Gains: ActualGains }, { where: { guildId: message.guild.id }});
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setDescription(`:coin: Les gains pour l'activité "${arg0}" ont été modifiés.\n\nGain minimum : ${min}\nGain maximum : ${max}`)
                 .setColor(data.color);
             return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });
@@ -99,7 +99,7 @@ module.exports = {
             ActualGains[gainKey] = Number(args[1]);
             await data.guilds.update({ Gains: ActualGains }, { where: { guildId: message.guild.id }});
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setDescription(`:coin: Le gain pour l'activité "${arg0}" a été modifié en ${args[1]}`)
                 .setColor(data.color);
             return message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } });

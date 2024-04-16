@@ -62,7 +62,7 @@ module.exports = {
             p = p * (-1);
           }
         }
-        let owner = new Discord.MessageEmbed()
+        let owner = new Discord.EmbedBuilder()
           .setTitle(`Owner list`)
           .setDescription(finallb)
           .setColor(data.color)

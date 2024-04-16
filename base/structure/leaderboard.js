@@ -14,21 +14,21 @@ module.exports = {
                     if (channel) {
                         const message = await client.channels.cache.get(db.get(`leaderboard_${guild.id}`)).messages.fetch(db.get(`msgleaderboard_${guild.id}`)).catch(e => { console.log(e) })
                         if (message) {
-                            let main = new Discord.MessageButton().setLabel('Top Main').setStyle('SUCCESS').setCustomId('main')
-                            let bank = new Discord.MessageButton().setLabel('Top Banque').setStyle('DANGER').setCustomId('banque')
-                            let rep = new Discord.MessageButton().setLabel('Top Rep').setStyle('SECONDARY').setCustomId('rep')
+                            let main = new Discord.ButtonBuilder().setLabel('Top Main').setStyle(Discord.ButtonStyle.Success).setCustomId('main')
+                            let bank = new Discord.ButtonBuilder().setLabel('Top Banque').setStyle('DANGER').setCustomId('banque')
+                            let rep = new Discord.ButtonBuilder().setLabel('Top Rep').setStyle(Discord.ButtonStyle.Secondary).setCustomId('rep')
 
 
-                            const row = new Discord.MessageActionRow().addComponents([main, bank, rep])
+                            const row = new Discord.ActionRowBuilder().addComponents([main, bank, rep])
 
-                            const embed = new Discord.MessageEmbed()
+                            const embed = new Discord.EmbedBuilder()
                                 .setColor('2F3136')
                                 .setDescription('Cliques sur le boutton correspondant au leaderboard que tu souhaites consulter ci-dessous !')
                             await message.edit({ embeds: [embed], content: `Last update <t:${Date.parse(new Date) / 1000}> (<t:${Date.parse(new Date) / 1000}>)`, components: [row] })
 
 
                             const collector = message.createMessageComponentCollector({
-                                componentType: "BUTTON",
+                                componentType: Discord.ComponentTypeButton,
                                 time: 70001
                             })
                             collector.on('collect', async (button) => {
@@ -55,7 +55,7 @@ module.exports = {
                                         }
 
 
-                                        const embed = new Discord.MessageEmbed()
+                                        const embed = new Discord.EmbedBuilder()
                                             .setAuthor({ name: `Leaderboard des coins en main sur ${guild.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
                                             .setDescription(finalLb ? finalLb : "Aucune donnée")
                                             .setColor('2F3136')
@@ -84,7 +84,7 @@ module.exports = {
                                         }
                                     }
 
-                                    const embed = new Discord.MessageEmbed()
+                                    const embed = new Discord.EmbedBuilder()
                                         .setAuthor({ name: `Leaderboard des coins en banque sur ${guild.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
                                         .setDescription(finalLb ? finalLb : "Aucune donnée")
                                         .setColor('2F3136')
@@ -111,7 +111,7 @@ module.exports = {
                                         }
                                     }
 
-                                    const embed = new Discord.MessageEmbed()
+                                    const embed = new Discord.EmbedBuilder()
                                         .setAuthor({ name: `Leaderboard des rep sur ${guild.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
                                         .setDescription(finalLb ? finalLb : "Aucune donnée")
                                         .setColor('2F3136')

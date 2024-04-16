@@ -9,7 +9,7 @@ module.exports = {
         if (!args[0] || !args[1]) {
             return message.reply({
                 embeds: [
-                    new Discord.MessageEmbed()
+                    new Discord.EmbedBuilder()
                         .setTitle(`:coin: Configuration des prix`)
                         .setColor(data.color)
                         .setDescription(`**Pour changer le gain prix d'un item faites \`setprice <bar/antirob/team/braqueur/charbon/impots/...> <prix>\`**`)
@@ -65,7 +65,7 @@ module.exports = {
 
         message.channel.send({
             embeds: [
-                new Discord.MessageEmbed()
+                new Discord.EmbedBuilder()
                     .setTitle(":white_check_mark: Succès")
                     .setColor(data.color)
                     .setDescription(embedDescription)

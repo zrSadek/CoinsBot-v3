@@ -27,9 +27,9 @@ module.exports = {
       const memberData = finallb.find(([id]) => id === message.member.id);
       if (memberData[1].rank === 3) return message.channel.send(`:warning: Vous devez être Officier ou Leader de la team pour inviter !`)
 
-      const row = new Discord.MessageActionRow()
+      const row = new Discord.ActionRowBuilder()
         .addComponents(
-          new Discord.MessageSelectMenu()
+          new Discord.StringSelectMenuBuilder()
             .setCustomId('select')
             .setPlaceholder('Faire une action')
             .addOptions([
@@ -41,7 +41,7 @@ module.exports = {
             ]),
         );
 
-      let moneyEmbed = new Discord.MessageEmbed()
+      let moneyEmbed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setThumbnail("https://media.discordapp.net/attachments/931284573306892348/998915745008336936/unknown.png?width=676&height=676")
         .setDescription(`:question: <@${member.user.id}> acceptes-tu l'invitation dans la team **${team.name}** ?\n_Tu as 30 secondes pour accepter_`);
@@ -51,7 +51,7 @@ module.exports = {
       }).then(m => {
 
         const collector = m.createMessageComponentCollector({
-          componentType: "SELECT_MENU",
+          componentType: Discord.ComponentType.SelectMenu,
           time: 30000
         })
         collector.on("collect", async (select) => {

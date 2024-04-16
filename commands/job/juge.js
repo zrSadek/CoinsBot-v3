@@ -13,7 +13,7 @@ module.exports = {
       if (memberDB.Capacite === "blanchisseur" || memberDB.Capacite === "cultivateur") {
         message.delete().catch(e => { })
         message.channel.send({
-          embeds: [new Discord.MessageEmbed()
+          embeds: [new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:x: Vous ne pouvez pas utiliser cette commande en ayant votre capacité actuel !`)
             .setFooter({ text: `Commande Anonyme` })]
@@ -22,7 +22,7 @@ module.exports = {
       if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "juge", 29100000, true))) return
       let jprice = data.guild.Prices["jugementprice"] || 500
 
-      let Embed = new Discord.MessageEmbed()
+      let Embed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:x: Vous avez besoin de ${jprice} coins pour lancer un procès !`);
       if (parseInt(memberDB.Coins) < parseInt(jprice)) return message.channel.send({ embeds: [Embed] })
@@ -31,7 +31,7 @@ module.exports = {
       if (!user || user.user.bot) return message.reply({ content: ":x: `ERROR:` Pas de membre trouvé !", allowedMentions: { repliedUser: false } })
       let targetuser = await getUser(user.id, message.guild.id)
 
-      let moneyEmbed2 = new Discord.MessageEmbed()
+      let moneyEmbed2 = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:x: **${user.user.username}** n'a pas de métier !`)
         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -44,10 +44,10 @@ module.exports = {
       let pour = 0
       let contre = 0
       let votants = {}
-      let button_next = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('pour').setEmoji("✅")
-      let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('contre').setEmoji("❌")
+      let button_next = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('pour').setEmoji("✅")
+      let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('contre').setEmoji("❌")
 
-      let button_row = new Discord.MessageActionRow().addComponents([button_next, button_back])
+      let button_row = new Discord.ActionRowBuilder().addComponents([button_next, button_back])
       message.channel.send({
         content: `:judge: **${message.member.user.username} lance un procès contre ${user.user.username}** pour lui retirer son métier de \`${targetuser.Metier}\`.\n
 > Si vous êtes favorable à ce procès pour lui retirer son métier cliquez sur :white_check_mark:
@@ -59,7 +59,7 @@ Le parti gagnant est celui arrivant au nombre de vote requis en premier, vous ne
         :white_check_mark: **Pour:** \`${pour} / 5 voix\`   |   :x: **Contre:** \`${contre} / 3 voix\``, components: [button_row]
       }).then(m => {
         const collector = message.channel.createMessageComponentCollector({
-          componentType: "BUTTON",
+          componentType: Discord.ComponentTypeButton,
           time: 60000
         })
         collector.on("collect", async (i) => {
@@ -82,7 +82,7 @@ Le parti gagnant est celui arrivant au nombre de vote requis en premier, vous ne
             })
             if (pour >= 5) {
               collector.stop()
-              let embed = new Discord.MessageEmbed()
+              let embed = new Discord.EmbedBuilder()
                 .setDescription(`:scales: **Vous avez jugé ${user.user}**, son rôle de ${targetuser.Metier} lui a bien été retiré et il se retrouve désormais chômeur !`)
                 .setColor(data.color)
                 .addField(`Voix **pour**:`, `\`${pour} / 5 voix\``)
@@ -107,7 +107,7 @@ Le parti gagnant est celui arrivant au nombre de vote requis en premier, vous ne
         :white_check_mark: **Pour:** \`${pour} / 5 voix\`   |   :x: **Contre:** \`${contre} / 3 voix\``)
             if (contre >= 3) {
               collector.stop()
-              let embed = new Discord.MessageEmbed()
+              let embed = new Discord.EmbedBuilder()
                 .setDescription(`:scales: **Vous avez jugé ${user.user}**, son rôle de ${targetuser.Metier} ne lui a pas été retiré !`)
                 .addField(`Voix **pour**:`, pour)
                 .addField(`Voix **contre**:`, contre)
@@ -126,7 +126,7 @@ Le parti gagnant est celui arrivant au nombre de vote requis en premier, vous ne
 
     } else {
       return message.channel.send({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(`:x: Vous devez être **juge** pour utiliser cette commande !`)]
       })

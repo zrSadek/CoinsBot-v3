@@ -24,12 +24,12 @@ module.exports = {
         .join("\n\n");
 
 
-    let button_next = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('next').setEmoji("▶️")
-    let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('back').setEmoji("◀️")
+    let button_next = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('next').setEmoji("▶️")
+    let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('back').setEmoji("◀️")
 
-    let button_row = new Discord.MessageActionRow().addComponents([button_back, button_next])
+    let button_row = new Discord.ActionRowBuilder().addComponents([button_back, button_next])
 
-    let embed = new Discord.MessageEmbed()
+    let embed = new Discord.EmbedBuilder()
       .setAuthor({ name: bot.user.tag, iconURL: bot.user.displayAvatarURL({ dynamic: true }) })
 
       .setFooter({ text: `Page - ${page}/${Math.ceil(bot.guilds.cache.size / 10)}` })
@@ -41,7 +41,7 @@ module.exports = {
       allowedMentions: { repliedUser: false }
     }).then(async msg => {
       const collector = message.channel.createMessageComponentCollector({
-        componentType: "BUTTON",
+        componentType: Discord.ComponentTypeButton,
         time: 150000
       })
       collector.on("collect", async (i) => {

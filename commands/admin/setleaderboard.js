@@ -17,7 +17,7 @@ module.exports = {
 
       message.channel.send(`Vous avez changé le salon du leaderboard interactif à ${channel}`)
 
-      let Embed = new Discord.MessageEmbed()
+      let Embed = new Discord.EmbedBuilder()
         .setColor(color)
         .setTitle(`Initialisation du leaderboard interactif en cours...`)
         .setDescription(`_Estimation de l'attente: \`30 secondes\`_`);

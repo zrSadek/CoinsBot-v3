@@ -1,4 +1,4 @@
-const blackjack = require("discord-blackjack");
+const blackjack = require("discord-blackjack-v14");
 const Discord = require("discord.js");
 const { verifnum } = require("../../base/functions");
 const addCoins = require("../../base/functions/addCoins");
@@ -28,7 +28,7 @@ module.exports = {
       if (!verifnum(money)) {
         return message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setColor(data.color)
               .setDescription(`:x: Précisez un montant valide à miser | blackjack <amount/all>`)
           ],
@@ -39,7 +39,7 @@ module.exports = {
 
     money = parseInt(money)
     if (money > moneydb || money <= 0) {
-      const moneymore = new Discord.MessageEmbed()
+      const moneymore = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:x: Vous n'avez pas assez !`);
       return message.reply({ embeds: [moneymore], allowedMentions: { repliedUser: false } });
@@ -47,8 +47,9 @@ module.exports = {
 
     await removeCoins(user.id, message.guild.id, money, "coins");
 
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
       .setTitle('BlackJack 🎲')
+      
       .setColor(data.color)
       .addFields(
         { name: `Votre main`, value: `Cartes: {yourcontent}\nTotal: {yvalue}`, inline: true },
@@ -58,13 +59,14 @@ module.exports = {
 
     const game = await blackjack(message, Discord, { normalEmbed: false, normalEmbedContent: embed, resultEmbed: false });
     rslow.roulette[message.author.id] = true
+    console.log(game)
     switch (game.result) {
       case 'Win':
         const wingain = parseInt(money * 2);
         await addCoins(user.id, message.guild.id, wingain, "coins");
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Vous avez gagné !")
               .setColor(data.color)
               .setDescription(`Vous avez un total de ${game.yvalue} et moi ${game.dvalue} points !\n:coin: Vous venez de gagner \`${wingain} coins\``)
@@ -76,7 +78,7 @@ module.exports = {
         await addCoins(user.id, message.guild.id, money, "coins");
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Egalité !")
               .setColor(data.color)
               .setDescription(`Nous avons tout les deux ${game.yvalue} points !`)
@@ -87,7 +89,7 @@ module.exports = {
       case 'Lose':
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Vous avez perdu !")
               .setColor(data.color)
               .setDescription(`Vous avez un total de ${game.yvalue} et moi ${game.dvalue} points !\n:coin: Vous venez de perdre \`${money} coins\``)
@@ -101,7 +103,7 @@ module.exports = {
 
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Double victoire !")
               .setColor(data.color)
               .setDescription(`Vous avez un total de ${game.yvalue} et moi ${game.dvalue} points !\n:coin: Vous venez de gagner \`${dwingain} coins\``)
@@ -114,7 +116,7 @@ module.exports = {
         await removeCoins(user.id, message.guild.id, dlosegain, "coins");
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Double défaite !")
               .setColor(data.color)
               .setDescription(`Vous avez un total de ${game.yvalue} et moi ${game.dvalue} points  !\n:coin: Vous venez de perdre \`${dlosegain} coins\``)
@@ -126,7 +128,7 @@ module.exports = {
         await addCoins(user.id, message.guild.id, money, "coins");
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("ERREUR !")
               .setColor(data.color)
               .setDescription(`Une erreur est apparue ! Vos coins ont été remboursés !`)
@@ -139,7 +141,7 @@ module.exports = {
         await addCoins(user.id, message.guild.id, timeoutgain, "coins");
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Temps écoulé !")
               .setColor(data.color)
               .setDescription(`Temps écoulé ! 50% de vos coins ont été remboursés !`)
@@ -151,7 +153,7 @@ module.exports = {
         await addCoins(user.id, message.guild.id, abandongain, "coins");
         message.reply({
           embeds: [
-            new Discord.MessageEmbed()
+            new Discord.EmbedBuilder()
               .setTitle("Abandon !")
               .setColor(data.color)
               .setDescription(`Vous avez abandonné ! La moitié de vos coins vous ont été remboursés !`)

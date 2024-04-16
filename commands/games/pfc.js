@@ -19,7 +19,7 @@ module.exports = {
             let timeout = 10000
             if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "game", timeout, true))) return
             let mise = args[1]
-            let moneymore = new Discord.MessageEmbed()
+            let moneymore = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: Vous n'avez pas assez !`);
             if (!mise) return message.channel.send(`:x: Merci de préciser une somme à jouer !`)
@@ -39,12 +39,12 @@ module.exports = {
                 }, 20000);
                 return message.channel.send(`:x: Vous avez déjà lancé un jeu ! Veuillez attendre la fin de celui-ci !`)
             }
-            const row = new Discord.MessageActionRow()
+            const row = new Discord.ActionRowBuilder()
                 .addComponents(
-                    new Discord.MessageButton()
+                    new Discord.ButtonBuilder()
                         .setCustomId('valide')
                         .setLabel('✅')
-                        .setStyle('SUCCESS'),
+                        .setStyle(Discord.ButtonStyle.Success),
                 );
             message.channel.send({ content: `:question: <@${opponent.user.id}> acceptes-tu le duel de **Pierre feuille ciseau** avec une mise de ${mise} coins contre <@${message.author.id}> ?\n\n_Tu as 30 secondes pour accepter_`, components: [row] }).then(m => {
 
@@ -66,7 +66,7 @@ module.exports = {
 
                         removeCoins(opponent.user.id, message.guild.id, mise, "coins");
                         removeCoins(message.member.id, message.guild.id, mise, "coins");
-                        let Embed2 = new Discord.MessageEmbed()
+                        let Embed2 = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setTitle(`Pierre feuille ciseau entre ${message.author.username} et ` + opponent.user.username)
                             .setDescription(`**Objectif**:\nChoisir le bon objet pour battre l'adversaire !\n__Exemple:__`)
@@ -81,11 +81,11 @@ module.exports = {
                                 go: '_ _        :right_fist:       **CHOISISSEZ !**         :left_fist:'
                             };
 
-                            let button_next = new Discord.MessageButton().setStyle('SECONDARY').setCustomId('pierre').setLabel(`Pierre`).setDisabled(true);
-                            let useless = new Discord.MessageButton().setStyle('SECONDARY').setCustomId('feuille').setLabel('Feuille').setDisabled();
-                            let button_back = new Discord.MessageButton().setStyle('SECONDARY').setCustomId('ciseau').setLabel(`Ciseau`).setDisabled(true);
+                            let button_next = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('pierre').setLabel(`Pierre`).setDisabled(true);
+                            let useless = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('feuille').setLabel('Feuille').setDisabled();
+                            let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('ciseau').setLabel(`Ciseau`).setDisabled(true);
 
-                            let button_row = new Discord.MessageActionRow().addComponents([button_next, useless, button_back])
+                            let button_row = new Discord.ActionRowBuilder().addComponents([button_next, useless, button_back])
                             const msg = await message.channel.send({
                                 content: positions.three,
                                 components: [button_row],
@@ -124,7 +124,7 @@ module.exports = {
                             let jeu_opponent
                             const collector = msg.createMessageComponentCollector({
                                 filter,
-                                componentType: "BUTTON",
+                                componentType: Discord.ComponentType.Button,
                                 time: 14999
                             })
                             collector.on("collect", async (button) => {

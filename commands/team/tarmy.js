@@ -17,7 +17,7 @@ module.exports = {
         message.reply("Chargement en cours...").then(msg => {
             update(msg)
             const collector = msg.createMessageComponentCollector({
-                componentType: "SELECT_MENU",
+                componentType: Discord.ComponentType.SelectMenu,
                 time: 120000
             })
 
@@ -69,7 +69,7 @@ module.exports = {
 
             let logprice = data.guild.Prices["logoprice"] || 10
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setAuthor({ name: `📡 Armée de la team ${authorteam.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
                 .setDescription(`\`\`\`js\nTroupes: ${authorteam.army}\`\`\`\n\n`)
                 .addFields([{ name: "🎖️ Niveau du camp d'entraînement:", value: `\`\`\`js\n${authorteam.trainlevel}\`\`\`` },
@@ -81,9 +81,9 @@ module.exports = {
             const memberData = finallb.find(([id]) => id === message.member.id);
             let compo = []
             if (memberData[1].rank <= 2) {
-                let row2 = new Discord.MessageActionRow()
+                let row2 = new Discord.ActionRowBuilder()
                     .addComponents(
-                        new Discord.MessageSelectMenu()
+                        new Discord.StringSelectMenuBuilder()
                             .setCustomId('select')
                             .setPlaceholder('Gérer l\'armée')
                             .addOptions([
@@ -113,8 +113,8 @@ module.exports = {
                     let label = "l'amélioration"
                     if (actual.activity == "form") label = "l\'entrainement"
                     if (actual.activity == "heal") label = "la guérison"
-                    let button4 = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('train').setLabel(`Fin de ${label} dans ${msToTime(actual.duration - (Date.now() - actual.date))}`).setDisabled(true)
-                    row2 = new Discord.MessageActionRow().addComponents([button4])
+                    let button4 = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('train').setLabel(`Fin de ${label} dans ${msToTime(actual.duration - (Date.now() - actual.date))}`).setDisabled(true)
+                    row2 = new Discord.ActionRowBuilder().addComponents([button4])
                     compo = [row2]
                 }
             }

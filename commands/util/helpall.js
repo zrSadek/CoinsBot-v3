@@ -11,7 +11,7 @@ module.exports = {
     let streamgain = gains.streamgain || 0
     let camgain = gains.camgain || 0
 
-    const page1 = new discord.MessageEmbed()
+    const page1 = new discord.EmbedBuilder()
       .setAuthor({ name: "Page d'aide des commandes", iconURL: "https://cdn.discordapp.com/attachments/851876715835293736/852647593020620877/746614051601252373.png" })
       .setColor(data.color)
       .setDescription(`Prefix du serveur: \`${data.guild.Prefix}\`
@@ -45,7 +45,7 @@ Utilisez \`${data.guild.Prefix}help [commande]\` pour obtenir des informations s
   owner, unowner, setprofil, leave
  
     
-     [\`Support du bot\`](https://discord.gg/CuRTzZMfYw)  |  [\`Lien pour ajouter m'ajouter\`](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8) | [\`CoinsBot top.gg\`](https://top.gg/bot/874400416731922432)
+     [\`Support du bot\`](https://discord.gg/uhq)  |  [\`Lien pour ajouter m'ajouter\`](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8) | [\`CoinsBot top.gg\`](https://top.gg/bot/874400416731922432)
      \n> Vous gagnez actuellement \`${voicegain} coins\` toutes les 15 minutes lorsque vous êtes en vocal, \`${streamgain} coins\` lorsque vous êtes en stream  et \`${camgain} coins\` lorsque vous activez votre caméra !`)
       .setFooter({ text: "Coins Bot | By Millenium is here#4444 & lowy#1444", iconURL: "https://discordemoji.com/assets/emoji/1824_coin.png" })
       .setImage("https://media.discordapp.net/attachments/1002173915549937715/1128656974859468832/coinsbotbannerr.png")

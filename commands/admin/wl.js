@@ -64,7 +64,7 @@ module.exports = {
           p = p * (-1);
         }
       }
-      let wl = new Discord.MessageEmbed()
+      let wl = new Discord.EmbedBuilder()
         .setTitle(`White list`)
         .setDescription(finallb)
         .setColor(data.color)

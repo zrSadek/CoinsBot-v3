@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const userTeam = require("../../base/functions/teams/userTeam");
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
     if (check.teamid === checck.teamid) {
       await teamRemove(member.id, team)
 
-      let embed = new MessageEmbed()
+      let embed = new EmbedBuilder()
         .setTitle(message.author.tag + " vient de kick " + member.user.tag + " la team " + name)
         .setDescription(`Aurevoir à lui !`)
         .setColor(data.color)

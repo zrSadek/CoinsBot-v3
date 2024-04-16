@@ -24,8 +24,8 @@ module.exports = {
                     const expired = expiredTime < Date.now();
                     let enchereTime = expiredTime / 1000
 
-                    const button = new Discord.MessageButton().setStyle('PRIMARY').setCustomId(`enchere-${m.id}`).setEmoji("🎉").setLabel(`${parseInt(actualenchere.lastenchere) + parseInt(actualenchere.click)}`.slice(0, 20))
-                    const button_row = new Discord.MessageActionRow().addComponents([button])
+                    const button = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId(`enchere-${m.id}`).setEmoji("🎉").setLabel(`${parseInt(actualenchere.lastenchere) + parseInt(actualenchere.click)}`.slice(0, 20))
+                    const button_row = new Discord.ActionRowBuilder().addComponents([button])
                     const embedColor = await color(null, guild.id, client, false)
                     if (expired) {
                         actualenchere.destroy()
@@ -37,7 +37,7 @@ module.exports = {
                         if (!winner) return m.channel.send(`Je ne trouve pas le membre qui avait enchéri **${couu}** coins (<@${winnerid}>).`)
                         let lastPrice = actualenchere.lastenchere
                         m.reply(`**Félicitation à ${winner}, pour avoir gagné **${actualenchere.prize}** qui aura enchéri ${lastPrice} coins.**`)
-                        let embedfinal = new Discord.MessageEmbed()
+                        let embedfinal = new Discord.EmbedBuilder()
                             .setTitle(actualenchere.prize)
                             .setColor(embedColor)
                             .setImage("https://media.discordapp.net/attachments/1002173915549937714/1051031533256982558/Ventes-aux-encheres-de-destockage.png?width=1440&height=613")
@@ -54,7 +54,7 @@ Dernier prix: **${lastPrice} coins**`)
                     let alreadyEnchere = actualenchere.encherisseur
                     alreadyEnchere = guild.members.cache.get(alreadyEnchere)
                     let couu = actualenchere.lastenchere
-                    embed2 = new Discord.MessageEmbed()
+                    embed2 = new Discord.EmbedBuilder()
                         .setTitle(actualenchere.prize)
                         .setColor(embedColor)
                         .setImage("https://media.discordapp.net/attachments/1002173915549937714/1051031533256982558/Ventes-aux-encheres-de-destockage.png?width=1440&height=613")

@@ -28,7 +28,6 @@ module.exports = {
                 id = args[0]
             }
 
-            console.log(id)
             if (!actualwhitelist[id]) return message.channel.send(`\`❌\` ${mm.username} n'est pas dans la liste des whitelist !`)
             let mm = client.users.cache.get(id)
             if (!mm) mm = `<@${id}>`

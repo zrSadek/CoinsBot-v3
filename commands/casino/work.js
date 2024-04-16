@@ -19,7 +19,7 @@ module.exports = {
 
     const randomnumber = between(minimum, maximum)
     addCoins(message.member.id, message.guild.id, randomnumber, "coins")
-    let embed5 = new Discord.MessageEmbed()
+    let embed5 = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setDescription(`:coin: ${message.author.username}, Vous venez de gagner \`${randomnumber} coins\``)
       .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })

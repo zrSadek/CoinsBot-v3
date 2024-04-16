@@ -12,10 +12,10 @@ module.exports = {
 
   run: async (client, message, args, data) => {
     let user = await getUser(message.member.user.id, message.guild.id);
-    let mineData = user.Minerais || {}
+    let mineData = JSON.parse(user.Minerais) || {}
 
     if (!mineData.wagon) return message.reply({
-      embeds: [new Discord.MessageEmbed()
+      embeds: [new Discord.EmbedBuilder()
         .setColor(data.color)
         .setFooter({ text: `${message.member.user.username}`, iconURL: `${message.member.user.displayAvatarURL({ dynamic: true })}` })
         .setDescription(`:x: Vous devez acheter un wagon avant de pouvoir utiliser cette commande !
@@ -24,9 +24,9 @@ module.exports = {
 
 
 
-    const row = new Discord.MessageActionRow()
+    const row = new Discord.ActionRowBuilder()
       .addComponents(
-        new Discord.MessageSelectMenu()
+        new Discord.StringSelectMenuBuilder()
           .setCustomId('select')
           .setPlaceholder('Faire une action')
           .addOptions([
@@ -48,7 +48,7 @@ module.exports = {
       rslow.wagon[message.author.id] = false;
 
       const collector = m.createMessageComponentCollector({
-        componentType: "SELECT_MENU",
+        componentType: Discord.ComponentType.SelectMenu,
         time: 50000
       })
       collector.on("collect", async (select) => {
@@ -119,7 +119,7 @@ module.exports = {
 
                   user.increment('Coins', { by: price });
                   message.channel.send({
-                    embeds: [new Discord.MessageEmbed()
+                    embeds: [new Discord.EmbedBuilder()
                       .setColor(data.color)
                       .setDescription(`:pick: Vous venez de vendre ${somme} ${minerais} pour \`${price} coins\` !`)
                       .setFooter({ text: `${message.member.user.username}`, iconURL: `${message.member.user.displayAvatarURL({ dynamic: true })}` })]
@@ -136,7 +136,7 @@ module.exports = {
       user = await getUser(message.member.user.id, message.guild.id);
       m.edit({
         content: " ",
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setThumbnail(`https://cdn.discordapp.com/attachments/902802602306183168/903178186010005544/wagon-removebg-preview.png`)
           .setAuthor({ name: `${message.member.user.username}`, iconURL: `${message.member.user.displayAvatarURL({ dynamic: true })}` })

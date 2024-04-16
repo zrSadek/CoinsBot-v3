@@ -1,4 +1,5 @@
-const { Message, Client, MessageEmbed, MessageActionRow, MessageSelectMenu, MessageButton, MessageAttachment } = require("discord.js");
+const { Message, Client, EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, MessageAttachment } = require("discord.js");
+const Discord = require("discord.js")
 let gain = 2
 const { webhook, verifnum } = require("../../base/functions");
 var rslow = require('../../roulette.js');
@@ -6,19 +7,19 @@ const removeCoins = require("../../base/functions/removeCoins");
 const addCoins = require("../../base/functions/addCoins");
 const getUser = require("../../base/functions/getUser");
 const createP4ActionRow = (pawns, currentPlayerPos, possibleActionsRow) => {
-    let backgroundStyle = "PRIMARY";
+    let backgroundStyle = Discord.ButtonStyle.Primary;
     if (currentPlayerPos == 1) {
-        backgroundStyle = "DANGER"
+        backgroundStyle = Discord.ButtonStyle.Danger
     } else {
-        backgroundStyle = "PRIMARY"
+        backgroundStyle = Discord.ButtonStyle.Primary
     }
-    buttonRow = new MessageActionRow()
-    buttonRow2 = new MessageActionRow()
+    buttonRow = new ActionRowBuilder()
+    buttonRow2 = new ActionRowBuilder()
 
     possibleActionsRow.forEach((el, i) => { // not enough space 5 /line
         if (i < 5) {
             buttonRow.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId(`${el.id}`)
                     .setLabel(`${i + 1}`)
                     .setStyle(backgroundStyle)
@@ -26,7 +27,7 @@ const createP4ActionRow = (pawns, currentPlayerPos, possibleActionsRow) => {
             )
         } else if (i >= 5 && i <= 7) {
             buttonRow2.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId(`${el.id}`)
                     .setLabel(`${i + 1}`)
                     .setStyle(backgroundStyle)
@@ -143,7 +144,7 @@ module.exports = {
                 opntID = opnt.id;
             }
             let mise = args[1]
-            let moneymore = new MessageEmbed()
+            let moneymore = new EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: Vous n'avez pas assez !`);
             if (!mise) return message.channel.send(`:x: Merci de préciser une somme à jouer !`)
@@ -173,16 +174,16 @@ module.exports = {
                 empty: '🔲',
             }
 
-            let preEmbd = new MessageEmbed()
+            let preEmbd = new EmbedBuilder()
                 .setFooter({ text: "By Desuke#9500 & by Millenium is here#4444" })
                 .setColor(data.color)
 
 
-            let acceptButton = new MessageActionRow()
+            let acceptButton = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId(`accept`)
-                        .setStyle('SUCCESS')
+                        .setStyle(Discord.ButtonStyle.Success)
                         .setEmoji('✅')
                 )
 

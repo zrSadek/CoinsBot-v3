@@ -51,7 +51,7 @@ module.exports = {
       next = `Tous les attributs de team ont été débloqués !`
     }
     let impots = (data.guild.Prices)["impotsprice"] || 10
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
       .setAuthor({ name: `Informations de la team ${authorteam.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
       .setDescription(`**Nom:** ${authorteam.name}\n **Description:** ${authorteam.desc}\n **Argent:** \`${authorteam.coins} coins\`\n **Réputation:** \`${authorteam.rep} rep\`\n **Impôt/Jour:** \`${impots * finallb.length * 6} coins\`\n **ID:** ${authorteam.teamid}\n\n${cadenas}\n\n __Membres (${finallb.length}) :__\n` + finallb.join("\n"))
       .setFooter({ text: next })

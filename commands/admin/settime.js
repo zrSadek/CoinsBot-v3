@@ -19,7 +19,7 @@ module.exports = {
             
             if (!args[0] || !args[1] || !args[1].match(/^\d/) || !args[1].endsWith("d") && !args[1].endsWith("h") && !args[1].endsWith("m")) {
                 return message.reply({
-                    embeds: [new Discord.MessageEmbed()
+                    embeds: [new Discord.EmbedBuilder()
                         .setTitle(`:timer: Configuration des gains`)
                         .setColor(data.color)
                         .setDescription(`Pour changer le cooldown entre chaque commande faites :\n\`${data.guild.Prefix}settime <work/rep/rob/mine/hack/blanchir/antirob> <time><m/h/d>\``)]
@@ -47,7 +47,7 @@ module.exports = {
                 { where: { guildId: message.guild.id } }
             );
 
-            let Embed = new Discord.MessageEmbed()
+            let Embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(embedDescription);
 

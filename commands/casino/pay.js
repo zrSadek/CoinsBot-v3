@@ -25,11 +25,11 @@ module.exports = {
             if (!verifnum(amount)) {cb()
                 return message.reply({ content: `:x: Ceci n'est pas un chiffre valide !`, allowedMentions: { repliedUser: false } })}
             amount = parseInt(amount)
-            let embedbank = new Discord.MessageEmbed()
+            let embedbank = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(":x: Vous n'avez pas d'argent à payer !")
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
-            let embed3 = new Discord.MessageEmbed()
+            let embed3 = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: Vous ne pouvez pas payer un montant négatif`)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -41,7 +41,7 @@ module.exports = {
             if (bal === 0){cb()
                  return message.reply({ embeds: [embedbank], allowedMentions: { repliedUser: false } })}
 
-            let moneymore = new Discord.MessageEmbed()
+            let moneymore = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: Vous n'avez pas assez de coins`)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })

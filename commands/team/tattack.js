@@ -41,7 +41,7 @@ module.exports = {
         if (!logs) return message.reply(":x: Le salon de logs n'a pas été défini par les administrateurs !\n_Psst:_ \`setlogs war <#channel>\`")
 
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setTitle(`Ralliement contre la team ${targetteam.name}`)
             .setDescription(`L'attaque partira dans <t:${parseInt((Date.now() + beforewar) / 1000)}:R>\n`)
             .addFields([{ name: "Troupes:", value: `\`\`\`js\n${args[1]}\`\`\`` }])
@@ -72,7 +72,7 @@ module.exports = {
                         }
                         if (troupes_attaque.alive > troupes_defense.alive) { victory = true } else { victory = false }
                     }
-                    const embed = new Discord.MessageEmbed()
+                    const embed = new Discord.EmbedBuilder()
                         .setTitle(`Ralliement contre la team ${targetteam.name}`)
                         .addFields([{ name: "Équipe attaque", value: `Survivant${troupes_attaque.alive > 1 ? "s" : ""}: _${troupes_attaque.alive || 0}_\nBlessé${troupes_attaque.blesses > 1 ? "s" : ""}: _${troupes_attaque.blesses}_\nMort${aaaaa - troupes_attaque.alive - troupes_attaque.blesses > 1 ? "s" : ""}: _${aaaaa - troupes_attaque.alive - troupes_attaque.blesses}_` },
                         { name: "Équipe défense", value: `Survivant${troupes_defense.alive > 1 ? "s" : ""}: _${troupes_defense.alive || 0}_\nBlessé${troupes_defense.blesses > 1 ? "s" : ""}: _${troupes_defense.blesses}_\nMort${bbbbb - troupes_defense.alive - troupes_defense.blesses > 1 ? "s" : ""}: _${bbbbb - troupes_defense.alive - troupes_defense.blesses}_` }])

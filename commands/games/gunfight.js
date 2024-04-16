@@ -22,7 +22,7 @@ module.exports = {
             return message.channel.send(`:x: Vous avez déjà lancé un jeu ! Veuillez attendre la fin de celui-ci !`)
         }
         let mise = args[1]
-        let moneymore = new Discord.MessageEmbed()
+        let moneymore = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:x: Vous n'avez pas assez !`);
         if (!mise) return message.channel.send(`:x: Merci de préciser une somme à jouer !`)
@@ -30,18 +30,18 @@ module.exports = {
         if (!verifnum(mise)) return message.reply({ content: `:x: Ceci n'est pas un chiffre valide !`, allowedMentions: { repliedUser: false } })
 
         if (mise === "all") { mise = moneydb }
-        if (mise > moneydb) return message.channel.send({ embeds: [moneymore] });
+        if (parseInt(mise) > parseInt(moneydb)) return message.channel.send({ embeds: [moneymore] });
         let amoneydb = (await getUser(opponent.user.id, message.guild.id)).Coins
         if (amoneydb < mise) return message.reply({ content: `:x: **${opponent.user.username} n'a pas assez de coins pour jouer avec vous !** Il doit avoir en main la somme misée pour jouer !`, allowedMentions: { repliedUser: false } })
 
         if (message.author.id === opponent.user.id) return message.channel.send('Tu peux pas jouer avec toi même !')
 
-        const row = new Discord.MessageActionRow()
+        const row = new Discord.ActionRowBuilder()
             .addComponents(
-                new Discord.MessageButton()
+                new Discord.ButtonBuilder()
                     .setCustomId('valide')
                     .setLabel('✅')
-                    .setStyle('SUCCESS'),
+                    .setStyle(Discord.ButtonStyle.Success),
             );
         message.channel.send({ content: `:question: <@${opponent.user.id}> acceptes-tu le duel de **Gun** avec une mise de ${mise} coins contre <@${message.author.id}> ?\n\n_Tu as 30 secondes pour accepter_`, components: [row] }).then(m => {
 
@@ -55,7 +55,7 @@ module.exports = {
                     m.delete()
                     removeCoins(message.member.id, message.guild.id, mise, "coins")
                     removeCoins(opponent.user.id, message.guild.id, mise, "coins")
-                    let Embed2 = new Discord.MessageEmbed()
+                    let Embed2 = new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setTitle(`Duel de gun entre ${message.author.username} et ` + opponent.user.username)
                         .setDescription(`**Objectif**:\nÊtre le premier à cliquer sur son boutton !\n__Exemple:__`)
@@ -72,11 +72,11 @@ module.exports = {
                             ended2: '_ _     :levitate: :skull_crossbones:      **STOP !**        :point_left: :levitate:',
                         };
 
-                        let button_next = new Discord.MessageButton().setStyle('SECONDARY').setCustomId('shoot1').setLabel(`Tire ${message.author.username} !`).setDisabled(true);
-                        let useless = new Discord.MessageButton().setStyle('SECONDARY').setCustomId('useless').setEmoji("⚔️").setDisabled();
-                        let button_back = new Discord.MessageButton().setStyle('SECONDARY').setCustomId('shoot2').setLabel(`Tire ${opponent.user.username} !`).setDisabled(true);
+                        let button_next = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('shoot1').setLabel(`Tire ${message.author.username} !`).setDisabled(true);
+                        let useless = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('useless').setEmoji("⚔️").setDisabled();
+                        let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Secondary).setCustomId('shoot2').setLabel(`Tire ${opponent.user.username} !`).setDisabled(true);
 
-                        let button_row = new Discord.MessageActionRow().addComponents([button_back, useless, button_next])
+                        let button_row = new Discord.ActionRowBuilder().addComponents([button_back, useless, button_next])
                         const msg = await message.channel.send({
                             content: positions.three,
                             components: [button_row],
@@ -113,7 +113,7 @@ module.exports = {
 
                         const collector = msg.channel.createMessageComponentCollector({
                             filter,
-                            componentType: "BUTTON",
+                            componentType: Discord.ComponentTypeButton,
                             time: 5000
                         })
                         collector.on("collect", async (button) => {
@@ -135,7 +135,7 @@ module.exports = {
                                     components: [button_row],
                                 });
                                 if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "game", timeout, true))) return
-                                addCoins(message.member.id, opponent.user.id, mise * gain, "coins")
+                                addCoins(opponent.user.id, message.guild.id, mise * gain, "coins")
                                 button.reply({ content: `<@${opponent.user.id}> remporte ce duel !\nLa mise de \`${mise * gain} coins\` a bien été versée sur son compte !` });
                             }
                             delete rslow.roulette[message.author.id];

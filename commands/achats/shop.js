@@ -41,7 +41,7 @@ module.exports = {
         return `\`${color.name.charAt(0).toUpperCase() + color.name.slice(1)}\` \n Prix : ${color.price} rep :small_red_triangle:`;
       }).join("\n")
     }
-    let Embed2 = new Discord.MessageEmbed()
+    let Embed2 = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setTitle(`Voici le shop du serveur ` + message.guild.name)
       .setDescription(`\`\`\` BATIMENTS \`\`\`

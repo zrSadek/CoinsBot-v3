@@ -27,7 +27,7 @@ module.exports = {
           memberDB.increment('Bank', { by: memberCoins });
           memberDB.decrement('Coins', { by: memberCoins });
 
-          let embed5 = new Discord.MessageEmbed()
+          let embed5 = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:coin: ${message.member.user.tag}, vous avez déposé \`${memberCoins} coins\` dans votre banque !`)
             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });
@@ -43,7 +43,7 @@ module.exports = {
           const amountToDeposit = parseInt(args[0]);
 
           if (memberCoins < amountToDeposit) {
-            let embed4 = new Discord.MessageEmbed()
+            let embed4 = new Discord.EmbedBuilder()
               .setColor(data.color)
               .setDescription(`:x: Vous n'avez pas assez d'argent pour déposer ${amountToDeposit} coins !`)
               .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });
@@ -53,7 +53,7 @@ module.exports = {
             memberDB.increment('Bank', { by: amountToDeposit });
             memberDB.decrement('Coins', { by: amountToDeposit });
 
-            let embed5 = new Discord.MessageEmbed()
+            let embed5 = new Discord.EmbedBuilder()
               .setColor(data.color)
               .setDescription(`:coin: ${message.member.user.tag}, vous avez déposé \`${amountToDeposit} coins\` dans votre banque !`)
               .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { msToTime } = require("../functions");
 const getUser = require("./getUser");
 const { Guilds } = require("../Database/Models/Guilds");
@@ -27,7 +27,7 @@ module.exports = async (message, color, UserId, GuildId, commandName, cooldownTi
                 await Users.update({ Cooldown: userCooldown }, { where: { primary: user.primary } });
             }
             const remainingTime = cooldownTime - elapsedTime;
-            let timeEmbed = new MessageEmbed()
+            let timeEmbed = new EmbedBuilder()
                 .setColor(color)
                 .setDescription(`:x: Vous avez déjà \`${commandName}\` récemment\n\nRéessayez dans ${msToTime(remainingTime)} `)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })

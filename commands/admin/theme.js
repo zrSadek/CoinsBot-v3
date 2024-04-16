@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
     name: "theme",
@@ -16,7 +16,7 @@ module.exports = {
                     { Color: str_content.replaceAll("#", "") }, 
                     { where: { guildId: message.guild.id } }
                   ); 
-                  const embed = new MessageEmbed()
+                  const embed = new EmbedBuilder()
                   .setColor(str_content)
                   .setDescription(`:white_check_mark: Vous avez défini la couleur de ce serveur en \`${str_content}\` `);
           

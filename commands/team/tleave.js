@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const userTeam = require("../../base/functions/teams/userTeam");
 const teamAdd = require("../../base/functions/teams/teamAdd");
 const teamRemove = require("../../base/functions/teams/teamRemove");
@@ -38,7 +38,7 @@ module.exports = {
       await teamRemove(message.member.id, team)
       if (finallb.length - 1 === 0) await teamDelete(team, message.guild.id)
     }
-    let embed = new MessageEmbed()
+    let embed = new EmbedBuilder()
       .setTitle(message.author.tag + " vient de quitter la team " + team.name)
       .setDescription(`Il peut désormais rejoindre une nouvelle team !`)
       .setColor(data.color)

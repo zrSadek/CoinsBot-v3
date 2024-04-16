@@ -29,7 +29,7 @@ module.exports = {
         const colorName = args[0]?.toLowerCase(); 
 
         if (colorName === 'info') {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setTitle(`Voici la boutique du serveur ${message.guild.name}`)
                 .setDescription(`${colors.map(color => {
@@ -42,7 +42,7 @@ module.exports = {
             const selectedColor = colorDictionary[colorName];
             const colorPrice = priceDictionary[colorName];
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: Vous avez besoin de ${colorPrice} rep pour acheter la couleur **${selectedColor.name}**`);
 
@@ -56,13 +56,13 @@ module.exports = {
 
             await data.users.update({ Color: selectedColor.hexCode, Rep: user.Rep - colorPrice }, { where: { userId: message.author.id, guildId: message.guild.id } });
 
-            const successEmbed = new Discord.MessageEmbed()
+            const successEmbed = new Discord.EmbedBuilder()
                 .setColor(selectedColor.hexCode)
                 .setDescription(`:white_check_mark: La couleur de vos embed sera désormais **${selectedColor.name}**\n${colorPrice} rep vous ont été prélevés !`);
 
             message.channel.send({ embeds: [successEmbed] });
         } else {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(":x: Couleur invalide. Utilisez `embed info` pour voir les couleurs disponibles.");
 

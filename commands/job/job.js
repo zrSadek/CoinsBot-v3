@@ -23,7 +23,7 @@ module.exports = {
         const price = data.guild.Prices[`${name}price`] || job.price
         return `**${name.charAt(0).toUpperCase() + name.slice(1)}** \n Prix : ${price} rep :small_red_triangle:\n ┖ ${job.description}`;
       }).join('\n\n')
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:x: Entrez un métier à acheter !\n${jobList}`)
         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });
@@ -34,7 +34,7 @@ module.exports = {
     if (author.Metier === job) return message.channel.send(`:x: Vous êtes déjà un **${job}**`);
 
     if (parseInt(author.Rep) < parseInt(jobPrice)) {
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:x: Vous avez besoin de ${jobPrice} réputations pour devenir un **${job}**`);
       return message.channel.send({ embeds: [embed] });
@@ -42,7 +42,7 @@ module.exports = {
 
     author.update({ Metier: job }, { where: { primary: author.primary }});
     author.decrement('Rep', { by: jobPrice });
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setDescription(`:white_check_mark: Vous êtes devenu **${job}** pour \`${jobPrice} rep\`\nAvantage: ${jobInfo.description}`);
     message.channel.send({ embeds: [embed] });

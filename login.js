@@ -24,13 +24,3 @@ module.exports = function processData(data) {
 
   return bot;
 };
-
-process.on('uncaughtException', (error) => {
-  console.log(error);
-});
-process.on('unhandledRejection', (reason, p) => {
-  console.log(reason, p);
-});
-process.on('multipleResolves', (type, promise, reason) => {
-  console.log(type, promise, reason);
-});

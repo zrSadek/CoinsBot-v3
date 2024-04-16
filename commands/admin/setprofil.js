@@ -8,9 +8,9 @@ module.exports = {
   run: async (client, message, args, data) => {
     const { id } = client.config
 
-    const row = new Discord.MessageActionRow()
+    const row = new Discord.ActionRowBuilder()
       .addComponents(
-        new Discord.MessageSelectMenu()
+        new Discord.StringSelectMenuBuilder()
           .setCustomId('select')
           .setPlaceholder('Faire une action')
           .addOptions([
@@ -47,7 +47,7 @@ module.exports = {
       });
       if(!BOTDB) return message.reply(":x: Le bot n'est pas enregistré dans la db, veuillez contacter le développeur du bot")
     let msg = await message.reply({ content: "Chargement ...", allowedMentions: { repliedUser: false } })
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.EmbedBuilder()
       .setTitle(`**__Paramètres du profile du bot__**`)
       .setTimestamp()
       .setColor(data.color)
@@ -60,7 +60,7 @@ module.exports = {
 
 
       const collector = m.createMessageComponentCollector({
-        componentType: "SELECT_MENU",
+        componentType: Discord.ComponentType.SelectMenu,
         time: 90000
       })
 
@@ -165,7 +165,7 @@ module.exports = {
         }
       })
       function update() {
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
           .setTitle(`**__Paramètres du profile du bot__**`)
           .setTimestamp()
           .setFooter({ text: `${client.user.username}` })

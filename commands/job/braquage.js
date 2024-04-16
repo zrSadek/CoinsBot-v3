@@ -18,13 +18,13 @@ module.exports = {
                 let cool = await setCooldown(message, data.color, user.id, message.guild.id, "antirob", 7200000, true, true)
                 if (!cool[0] && cool !== true && cool.length && cool[1]) {
 
-                    let timeEmbed = new Discord.MessageEmbed()
+                    let timeEmbed = new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`:shield: Vous ne pouvez pas braquer cet utilisateur\n\n Son anti-rob prendra fin dans ${cool[1]} `)
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
                     return message.reply({ embeds: [timeEmbed], allowedMentions: { repliedUser: false } })
                 } else {
-                    let moneyEmbed2 = new Discord.MessageEmbed()
+                    let moneyEmbed2 = new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`:x: **${user.user.username}** n'a pas d'argent à braquer !`)
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -35,7 +35,7 @@ module.exports = {
                     const checkif = between(1, 3)
                     if (checkif === 2 || checkif === 3) {
                         return message.reply({
-                            embeds: [new Discord.MessageEmbed()
+                            embeds: [new Discord.EmbedBuilder()
                                 .setColor(data.color)
                                 .setDescription(`:bank: Vous n'avez pas réussi à braquer **${user.user.username}** !`)
                                 .setImage('https://www.kiffland.fr/pictures/images_series/062014/braquages-rigolos-17.gif')
@@ -48,7 +48,7 @@ module.exports = {
 
                     random = random / 3
                     random = Math.round(random)
-                    let embed = new Discord.MessageEmbed()
+                    let embed = new Discord.EmbedBuilder()
                         .setDescription(`:white_check_mark: Vous avez braqué ${user} et repartez avec \`${random} coins\` en plus`)
                         .setColor(data.color)
                         .setImage('https://media1.tenor.com/images/5f3179cea7af4b2859a5e3db6ea900d5/tenor.gif?itemid=10879740')
@@ -64,7 +64,7 @@ module.exports = {
                 let authorteam = await userTeam(false, message.guild.id, args[0])
                 if (!authorteam) return message.channel.send(`:x: Pas de team trouvé avec le nom \`${args[0]}\` !`.replaceAll("@", "a"))
                 if (authorteam.cadenas > 0) {
-                    let embed = new Discord.MessageEmbed()
+                    let embed = new Discord.EmbedBuilder()
                         .setDescription(`:lock: La team ${authorteam.name} lui reste **${authorteam.cadenas} cadena(s)** qui la protège des braquages !`)
                         .setColor(data.color)
                         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });
@@ -77,7 +77,7 @@ module.exports = {
 
                 if (checkiff === 2 || checkiff === 3) {
                     return message.reply({
-                        embeds: [new Discord.MessageEmbed()
+                        embeds: [new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:bank: Vous n'avez pas réussi à braquer la team ${authorteam.name} !`)
                             .setImage('https://www.kiffland.fr/pictures/images_series/062014/braquages-rigolos-17.gif')
@@ -88,7 +88,7 @@ module.exports = {
                 let gain = between(30, bank)
                 gain = gain / 3
                 gain = Math.round(gain)
-                let embed = new Discord.MessageEmbed()
+                let embed = new Discord.EmbedBuilder()
                     .setDescription(`:white_check_mark: Vous avez braqué la team ${authorteam.name} et repartez avec \`${gain} coins\` en plus`)
                     .setColor(data.color)
                     .setImage('https://media1.tenor.com/images/5f3179cea7af4b2859a5e3db6ea900d5/tenor.gif?itemid=10879740')
@@ -99,7 +99,7 @@ module.exports = {
             }
         } else {
             return message.channel.send({
-                embeds: [new Discord.MessageEmbed()
+                embeds: [new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:x: Vous devez être **braqueur** pour utiliser cette commande !`)]
             })

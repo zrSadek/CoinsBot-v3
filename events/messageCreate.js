@@ -106,6 +106,7 @@ module.exports = {
     try {
       await cmd.run(client, message, args, db);
     } catch (error) {
+      console.log(error)
       webhook(error, message);
       return message.channel.send(":x: Une erreur est survenue lors de l'exécution de la commande.").catch(e => { });
     }

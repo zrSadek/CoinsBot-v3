@@ -104,7 +104,7 @@ module.exports = {
 
                                                     if (asend) {
                                                         const embedcolor = await color(member.id, guild.id, client)
-                                                        asend.send({ embeds: [new Discord.MessageEmbed().setColor(embedcolor).setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL({ dynamic: true }) }).setDescription(`${member} vient de gagner \`${gain} coins\` en étant en \`${activity}\``).setTimestamp()] }).catch(e => { })
+                                                        asend.send({ embeds: [new Discord.EmbedBuilder().setColor(embedcolor).setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL({ dynamic: true }) }).setDescription(`${member} vient de gagner \`${gain} coins\` en étant en \`${activity}\``).setTimestamp()] }).catch(e => { })
                                                     }
                                                 }
                                             }

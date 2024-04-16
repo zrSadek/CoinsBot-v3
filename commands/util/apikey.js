@@ -15,9 +15,9 @@ module.exports = {
         if (!botDB) return message.reply(":warning: Votre bot n'est pas inscrit dans la base de donnée d'EpicBots, veuillez contacter le support ! ")
         const founder = client.config.owner
         if (founder.includes(message.author.id)) {
-            let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('yes').setEmoji("✅").setLabel(`Oui`)
+            let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('yes').setEmoji("✅").setLabel(`Oui`)
 
-            let button_row = new Discord.MessageActionRow().addComponents([button_back])
+            let button_row = new Discord.ActionRowBuilder().addComponents([button_back])
 
             return message.reply({
                 content: `:question: Êtes-vous sûr de vouloir regénérer la clef d'API du serveur ?`,
@@ -26,7 +26,7 @@ module.exports = {
             }).then(m => {
 
                 const collector = m.createMessageComponentCollector({
-                    componentType: "BUTTON",
+                    componentType: Discord.ComponentType.Button,
                     time: 30000
                 })
                 collector.on("collect", async (i) => {

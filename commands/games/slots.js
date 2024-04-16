@@ -23,12 +23,12 @@ module.exports = {
         moneydb = parseInt(moneydb)
         let money = args[0]
         let win = false;
-        let moneymore = new Discord.MessageEmbed()
+        let moneymore = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:x: Vous n'avez pas assez de coins !`)
             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
 
-        let moneyhelp = new Discord.MessageEmbed()
+        let moneyhelp = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:x: Précisez un montant à miser | slots <amount/all>`);
         if (!money) return message.channel.send({ embeds: [moneyhelp] });
@@ -40,7 +40,7 @@ module.exports = {
 
         removeCoins(message.member.id, message.guild.id, money, "coins")
 
-        let slots = new Discord.MessageEmbed()
+        let slots = new Discord.EmbedBuilder()
             .setDescription(`** **`)
             .setColor(data.color)
             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -53,7 +53,7 @@ module.exports = {
         var rValue3 = myArray[rand];
 
         rslow.roulette[message.author.id] = true
-        let embed = new Discord.MessageEmbed()
+        let embed = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle(`${rValue} | ${rValue2} | ${rValue3}`)
             .setDescription(user.username + ` vient de lancer un **slots** en misant \`${money} coins\` !      
@@ -73,7 +73,7 @@ module.exports = {
                 var rValue2 = myArray[rand];
                 var rand = Math.floor(Math.random() * myArray.length);
                 var rValue3 = myArray[rand];
-                embed = new Discord.MessageEmbed()
+                embed = new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setTitle(`${rValue} | ${rValue2} | ${rValue3}`)
                     .setDescription(user.username + ` vient de lancer un **slots** en misant \`${money} coins\` !      

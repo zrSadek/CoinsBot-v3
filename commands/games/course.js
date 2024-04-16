@@ -1,4 +1,5 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
+const Discord = require("discord.js")
 const { parseHuman } = require("human-ms");
 const color = require('../../base/functions/color');
 const { verifnum } = require('../../base/functions');
@@ -29,11 +30,11 @@ module.exports = {
 
         message.channel.send(`*Course lancée dans ${channel}*`);
 
-        const button1 = new MessageButton().setStyle('PRIMARY').setCustomId('miseur1').setLabel('1');
-        const button2 = new MessageButton().setStyle('PRIMARY').setCustomId('miseur2').setLabel('2');
-        const button3 = new MessageButton().setStyle('PRIMARY').setCustomId('miseur3').setLabel('3');
-        const button4 = new MessageButton().setStyle('PRIMARY').setCustomId('miseur4').setLabel('4');
-        const buttonRow = new MessageActionRow().addComponents(button1, button2, button3, button4);
+        const button1 = new ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('miseur1').setLabel('1');
+        const button2 = new ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('miseur2').setLabel('2');
+        const button3 = new ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('miseur3').setLabel('3');
+        const button4 = new ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('miseur4').setLabel('4');
+        const buttonRow = new ActionRowBuilder().addComponents(button1, button2, button3, button4);
 
         let cheval1 = [];
         let cheval2 = [];
@@ -46,15 +47,15 @@ module.exports = {
         let miseur4 = [];
         let miseurs = [];
 
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle("Votez pour un cheval !")
-            .setImage(embedColor)
+            .setColor(embedColor)
             .setDescription(`_La course commence dans <t:${Math.floor((Date.now() + dure) / 1000)}:R>_\n\n:one: ${position(cheval1).map(pos => `${pos}`).join("")}:horse_racing:\n:two: ${position(cheval2).map(pos => `${pos}`).join("")}:horse_racing:\n:three: ${position(cheval3).map(pos => `${pos}`).join("")}:horse_racing:\n:four: ${position(cheval4).map(pos => `${pos}`).join("")}:horse_racing:`)
             .setImage("https://st3.depositphotos.com/11783088/17601/v/600/depositphotos_176018860-stock-illustration-horsre-racecourse-vector-illustrations.jpg");
 
         channel.send({ embeds: [embed], components: [buttonRow] }).then(msg => {
             const collector = msg.createMessageComponentCollector({
-                componentType: "BUTTON",
+                componentType: Discord.ComponentType.Button,
                 time: dure
             });
 

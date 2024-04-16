@@ -57,7 +57,7 @@ module.exports = {
       total = maxentrepot
     }
 
-    const moneyEmbed = new Discord.MessageEmbed()
+    const moneyEmbed = new Discord.EmbedBuilder()
       .setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL({ dynamic: true }) })
       .setDescription(`${batarray.map(i => i.replace(i[2], i[2].toUpperCase())).join("\n")}\n**Entrepôt:** \`${total}/${maxentrepot} coins\`\n\n**Anti-rob:** ${timetime || "Inactif"}\n**Métier**: ${job}\n**Couleur des embed:** ${couleur}\n**Team:** ${teaminf}`)
       .setColor(data.color)

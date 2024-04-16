@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageSelectMenu } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder } = require("discord.js");
 const checkGuild = require("../../base/functions/checkGuild");
 
 
@@ -15,7 +15,7 @@ module.exports = {
     message.reply("Chargement...").then(async m => {
       await update(m)
       const collector = m.createMessageComponentCollector({
-        componentType: "SELECT_MENU",
+        componentType: Discord.ComponentType.SelectMenu,
         time: 90000
       });
       collector.on("collect", async (select) => {
@@ -42,7 +42,7 @@ module.exports = {
               delete difarr[foundItem[1].id]
               await data.guilds.update({ cshop: difarr }, { where: { guildId: message.guild.id }});
 
-              const embed = new MessageEmbed()
+              const embed = new EmbedBuilder()
                 .setTitle("Item retiré !")
                 .setDescription(`Nom: ${foundItem[1].name}\nPrix: ${foundItem[1].cost}\nRôle: <@&${foundItem[1].id}>`)
                 .setColor(data.color);
@@ -101,7 +101,7 @@ module.exports = {
 
           await data.guilds.update({ cshop: difarr }, { where: { guildId: message.guild.id }});
 
-          const embed = new MessageEmbed()
+          const embed = new EmbedBuilder()
             .setTitle("Item ajouté !")
             .setDescription(`Nom: ${name}\nPrix: ${cost}\nRôle: <@&${id}>`)
             .setColor(data.color);
@@ -118,9 +118,9 @@ module.exports = {
         .map((m, i) => `${i + 1}) ${m[1].name} (<@&${m[1].id}>)\nPrix: \`${m[1].cost} coins\``)
       itemsList = itemsList.length > 0 ? itemsList.slice(0, 31).join("\n") : "Aucun item n'a été ajouté dans le shop du serveur !";
 
-      const row = new MessageActionRow()
+      const row = new ActionRowBuilder()
         .addComponents(
-          new MessageSelectMenu()
+          new StringSelectMenuBuilder()
             .setCustomId('select')
             .setPlaceholder('Faire une action')
             .addOptions([
@@ -139,7 +139,7 @@ module.exports = {
             ]),
         );
 
-      const embed = new MessageEmbed()
+      const embed = new EmbedBuilder()
         .setAuthor({ name: `Panel de configuration du shop de ${message.guild.name}` })
         .setDescription(itemsList)
         .addField('➕', 'Ajoute un rôle au shop', true)

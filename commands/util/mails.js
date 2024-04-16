@@ -33,9 +33,9 @@ module.exports = {
             }
             memberarray.forEach((chunk, i) => embeds[i] = chunk);
         }
-        const roww = new Discord.MessageActionRow()
+        const roww = new Discord.ActionRowBuilder()
             .addComponents(
-                new Discord.MessageSelectMenu()
+                new Discord.StringSelectMenuBuilder()
                     .setCustomId('select')
                     .setPlaceholder('Supprimer ses mails')
                     .addOptions([{
@@ -44,19 +44,19 @@ module.exports = {
                         value: 'clear'
                     }])
             )
-        const row = new Discord.MessageActionRow().addComponents([
-            new Discord.MessageButton()
-                .setStyle('PRIMARY')
+        const row = new Discord.ActionRowBuilder().addComponents([
+            new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Primary)
                 .setEmoji('⬅️')
                 .setCustomId('left'),
 
-            new Discord.MessageButton()
-                .setStyle('PRIMARY')
+            new Discord.ButtonBuilder()
+                .setStyle(Discord.ButtonStyle.Primary)
                 .setEmoji('➡️')
                 .setCustomId('right'),
         ])
 
-        let embed = new Discord.MessageEmbed()
+        let embed = new Discord.EmbedBuilder()
         embed.setTitle(`📩 Voici votre boite mail (${member.length}${member.length > 19 ? " (max) " : ""})`)
         embed.setThumbnail("https://media.discordapp.net/attachments/1002173915549937715/1029091852734971944/unknown.png")
         embed.setColor(color)
@@ -75,11 +75,11 @@ module.exports = {
         }).then(messages => {
 
             const collector = messages.createMessageComponentCollector({
-                componentType: "BUTTON",
+                componentType: Discord.ComponentTypeButton,
                 time: 300000,
             })
             const collectorr = messages.createMessageComponentCollector({
-                componentType: "SELECT_MENU",
+                
                 time: 300000
             })
 

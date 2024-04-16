@@ -21,15 +21,15 @@ module.exports = {
     let colour = args[1];
     let moneydb = (await getUser(message.member.id, message.guild.id)).Coins
     let random = Math.floor(Math.random() * 37);
-    let moneyhelp = new Discord.MessageEmbed()
+    let moneyhelp = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setDescription(`:x: Précisez un montant à miser | roulette <amount/all> <color/number>`);
 
-    let moneymore = new Discord.MessageEmbed()
+    let moneymore = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setDescription(`:x: Vous n'avez pas assez !`);
 
-    let colorbad = new Discord.MessageEmbed()
+    let colorbad = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setDescription(`:x: Précisez une couleur | Red [1.5x] Black [2x] Green [12x] **ou** un chiffre`);
     if (!money) return message.channel.send({ embeds: [moneyhelp] });
@@ -48,12 +48,12 @@ module.exports = {
     }
     if (isNaN(colour)) {
       if (money < 50) return message.channel.send({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(`:x: Vous devez miser un chiffre supérieur à 50 !`)]
       })
       if (isNaN(money)) return message.channel.send({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(`:x: Vous devez miser un chiffre valide !`)]
       })
@@ -64,10 +64,10 @@ module.exports = {
       rslow.roulette[message.author.id] = true;
       removeCoins(message.member.id, message.guild.id, money, "coins")
       message.channel.send({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(user.username + ` vient de lancer une **roulette** en misant \`${money} coins\` sur \`${args[1]}\` !`)
-          .setImage("https://thumbs.gfycat.com/LivelyObviousAnhinga-size_restricted.gif")
+          .setImage("https://media.discordapp.net/attachments/1170288145871413318/1229716279456305204/roulette.gif?ex=6630b188&is=661e3c88&hm=fdb31c12e275e2a32667c540ca276172640c051853c73e4e0b56715b3ecaac10&=&width=768&height=540")
           .setFooter({ text: `${message.member.user.username} | 10 secondes avant le résultat`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })], allowedMentions: { repliedUser: false }
       })
 
@@ -76,7 +76,7 @@ module.exports = {
           money *= 12
           addCoins(message.member.id, message.guild.id, money, "coins")
           rslow.roulette[message.author.id] = false;
-          let moneyEmbed1 = new Discord.MessageEmbed()
+          let moneyEmbed1 = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle(`Résultat: Green`)
             .setDescription(`:green_circle: Vous avez gagné \`${money} coins\`\n\Multiplieur: 12x`)
@@ -89,7 +89,7 @@ module.exports = {
           money = parseInt(money * 1.5)
           addCoins(message.member.id, message.guild.id, money, "coins")
           rslow.roulette[message.author.id] = false;
-          let moneyEmbed2 = new Discord.MessageEmbed()
+          let moneyEmbed2 = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle(`Résultat: Red`)
             .setDescription(`:red_circle: Vous avez gagné \`${money} coins\`\n\nMultiplieur: 1.5x`)
@@ -103,7 +103,7 @@ module.exports = {
           money = parseInt(money * 2)
           addCoins(message.member.id, message.guild.id, money, "coins")
           rslow.roulette[message.author.id] = false;
-          let moneyEmbed3 = new Discord.MessageEmbed()
+          let moneyEmbed3 = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle(`Résultat: Black`)
             .setDescription(`:black_circle: Vous avez gagné \`${money} coins\`\n\nMultiplieur: 2x`)
@@ -114,7 +114,7 @@ module.exports = {
           wlog(message.author, "GREEN", message.guild, `${message.author.tag} vient de gagner \`\`${money} coins\`\``, "Roulette")
 
         } else { // Wrong
-          let moneyEmbed4 = new Discord.MessageEmbed()
+          let moneyEmbed4 = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:x: Vous avez perdu \`${money} coins\`\n\nMultiplieur: 0x`)
             .setFooter({
@@ -131,17 +131,17 @@ module.exports = {
     } else {
       let number = args[1]
       if (number < 0 || number > 37) return message.channel.send({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(`:x: Le chiffre doit être compris entre **0** et **37**`)
           .setFooter({ text: `${message.member.user.username}`, iconURL: `${message.member.user.displayAvatarURL({ dynamic: true })}` })], allowedMentions: { repliedUser: false }
       })
       rslow.roulette[message.author.id] = true;
       message.channel.send({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(user.username + ` vient de lancer une **roulette** en misant \`${money} coins\` sur \`${args[1]}\` !`)
-          .setImage("https://thumbs.gfycat.com/LivelyObviousAnhinga-size_restricted.gif")
+          .setImage("https://media.discordapp.net/attachments/1170288145871413318/1229716279456305204/roulette.gif?ex=6630b188&is=661e3c88&hm=fdb31c12e275e2a32667c540ca276172640c051853c73e4e0b56715b3ecaac10&=&width=768&height=540")
           .setFooter({ text: `${message.member.user.username} | 20 secondes avant le résultat`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })], allowedMentions: { repliedUser: false }
       })
       removeCoins(message.member.id, message.guild.id, money, "coins")
@@ -151,7 +151,7 @@ module.exports = {
           let gain = money * 4
 
           message.reply({
-            embeds: [new Discord.MessageEmbed()
+            embeds: [new Discord.EmbedBuilder()
               .setColor(data.color)
               .setTitle("Résultat: " + roulettenumber)
               .setDescription(`:tada: Vous avez misez sur le bon numéro !\nVous venez de gagner \`${gain} coins\``)], allowedMentions: { repliedUser: false }
@@ -161,7 +161,7 @@ module.exports = {
           rslow.roulette[message.author.id] = false;
         } else {
           message.reply({
-            embeds: [new Discord.MessageEmbed()
+            embeds: [new Discord.EmbedBuilder()
               .setColor("RED")
               .setTitle("Résultat: " + roulettenumber)
               .setDescription(`:name_badge: Vous avez misez sur le mauvais numéro !\nVous venez de perdre \`${money} coins\``)], allowedMentions: { repliedUser: false }

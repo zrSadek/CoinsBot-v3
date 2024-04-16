@@ -10,9 +10,9 @@ module.exports = {
 
   run: async (client, message, args, data) => {
     const user = await getUser(message.member.user.id, message.guild.id);
-    const mineData = user.Minerais || {}
+    const mineData = JSON.parse(user.Minerais) || {}
     if (!mineData.wagon) {
-      const nowEmbed = new Discord.MessageEmbed()
+      const nowEmbed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setFooter({
           text: message.member.user.username,
@@ -24,7 +24,7 @@ module.exports = {
 
     let cool = await setCooldown(message, data.color, message.author.id, message.guild.id, "mine", 3600000, false, true)
     if (!cool[0] && cool !== true && cool.length) {
-      const timeEmbed = new Discord.MessageEmbed()
+      const timeEmbed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setThumbnail("https://cdn.discordapp.com/attachments/902802602306183168/903178967446593556/pioche-removebg-preview.png")
         .setDescription(`:x: Vous avez déjà miné récemment\n\nRéessayez dans ${cool[1]}\nUtilisez la commande \`wagon\` pour vendre vos minerais\n\n**__Inventaire:__**\n**Charbon:** ${mineData.charbon || 0}\n**Fer:** ${mineData.fer || 0}\n**Or:** ${mineData.or || 0}\n**Diamant:** ${mineData.diamant || 0}`)
@@ -41,7 +41,7 @@ module.exports = {
     const numb = between(1, 2);
     await addMinerais(message.author.id, message.guild.id, minerais, numb, true)
 
-    const embed5 = new Discord.MessageEmbed()
+    const embed5 = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setThumbnail("https://cdn.discordapp.com/attachments/902802602306183168/903178967446593556/pioche-removebg-preview.png")
       .setDescription(`:pick: ${message.author.tag}, Vous venez de gagner \`${numb} ${minerais}(s)\`\nUtilisez la commande \`wagon\` pour vendre vos minerais !`)
@@ -56,7 +56,7 @@ module.exports = {
     if (values.wagon <= 0) {
       message.channel.send({
         embeds: [
-          new Discord.MessageEmbed()
+          new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(":pick: Oh non ! Votre wagon vient de se casser !\nUtilisez la commande `buy wagon` pour en acheter un nouveau !")
             .setFooter({

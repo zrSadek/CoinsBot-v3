@@ -11,9 +11,9 @@ module.exports = {
     aliases: ['lb', 'leaderboard'],
 
     run: async (client, message, args, data) => {
-        const row = new Discord.MessageActionRow()
+        const row = new Discord.ActionRowBuilder()
             .addComponents(
-                new Discord.MessageSelectMenu()
+                new Discord.StringSelectMenuBuilder()
                     .setCustomId('select')
                     .setPlaceholder('Faire une action')
                     .addOptions([
@@ -56,9 +56,9 @@ module.exports = {
 
 
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setAuthor({ name: `Leaderboard total des coins sur ${message.guild.name}`, iconURL: "https://media.discordapp.net/attachments/1002173915549937714/1126429455066333184/1f911.png" })
-                .setDescription(await LBtotal(message.guild, message.member.id))
+                .setDescription(await LBtotal(message.guild.id, message.guild))
                 .setColor(data.color)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });
 
@@ -72,7 +72,7 @@ module.exports = {
 
 
             const collector = medit.createMessageComponentCollector({
-                componentType: "SELECT_MENU",
+                
                 time: 60000
             })
             collector.on("collect", async (select) => { // tu prends celui que tu async
@@ -109,24 +109,24 @@ module.exports = {
         async function LB(message, medit, type) {
             let finalLb
             if (type == "coins") {
-                finalLb = await LBmain(message.guild, message.member.id)
+                finalLb = await LBmain(message.guild.id, message.guild)
             }
             if (type == "bank") {
-                finalLb = await LBbank(message.guild, message.member.id)
+                finalLb = await LBbank(message.guild.id, message.guild)
             }
             if (type == "rep") {
-                finalLb = await LBrep(message.guild, message.member.id)
+                finalLb = await LBrep(message.guild.id, message.guild)
             }
             if (type == "victoires") {
-                finalLb = await LBvictoires(message.guild, message.member.id)
+                finalLb = await LBvictoires(message.guild.id, message.guild)
             }
             if (type == "palier") {
-                finalLb = await LBpalier(message.guild, message.member.id)
+                finalLb = await LBpalier(message.guild.id, message.guild)
             }
             if (type == "total") {
-                finalLb = await LBtotal(message.guild, message.member.id)
+                finalLb = await LBtotal(message.guild.id, message.guild)
             }
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setAuthor({ name: `Leaderboard des ${type} sur ${message.guild.name}`, iconURL: "https://media.discordapp.net/attachments/1002173915549937714/1114864514056327268/epiccoins.png" })
                 .setDescription(finalLb || "Aucune donnée")
                 .setColor(data.color)

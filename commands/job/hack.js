@@ -21,7 +21,7 @@ module.exports = {
             const memberData = finallb.find(([id]) => id === message.member.id)
             if (memberData) return message.reply(`:x: Vous ne pouvez pas hack votre team !`)
 
-            let moneyEmbed2 = new Discord.MessageEmbed()
+            let moneyEmbed2 = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: La team \`${authorteam.name}\` n'a plus de cadenas !`)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: `${message.member.user.displayAvatarURL({ dynamic: true })}` });
@@ -32,7 +32,7 @@ module.exports = {
             if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "hack", 7200000))) return
             if (checkif === 2) {
                 return message.channel.send({
-                    embeds: [new Discord.MessageEmbed()
+                    embeds: [new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`:bank: Vous n'avez pas réussi à hack la team \`${authorteam.name}\` !`)
                         .setImage('https://media4.giphy.com/media/YQitE4YNQNahy/giphy-downsized-large.gif')
@@ -41,7 +41,7 @@ module.exports = {
             }
 
 
-            let embed = new Discord.MessageEmbed()
+            let embed = new Discord.EmbedBuilder()
                 .setDescription(`:white_check_mark: Vous avez hack la team \`${authorteam.name}\` !`)
                 .setColor(data.color)
                 .setImage('https://giffiles.alphacoders.com/209/209037.gif')
@@ -52,7 +52,7 @@ module.exports = {
 
         } else {
             return message.channel.send({
-                embeds: [new Discord.MessageEmbed()
+                embeds: [new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:x: Vous devez être **hacker** pour utiliser cette commande !`)]
             })

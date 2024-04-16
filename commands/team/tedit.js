@@ -21,9 +21,9 @@ module.exports = {
     const memberData = finallb.find(([id]) => id === message.member.id);
     if (memberData[1].rank !== 1) return message.channel.send(`:warning: Vous devez être \`Créateur\` de la team pour la modifier !`)
 
-    const row = new Discord.MessageActionRow()
+    const row = new Discord.ActionRowBuilder()
       .addComponents(
-        new Discord.MessageSelectMenu()
+        new Discord.StringSelectMenuBuilder()
           .setCustomId('select')
           .setPlaceholder('Faire une action')
           .addOptions([
@@ -66,7 +66,7 @@ module.exports = {
     }).then(async m => {
       await update(m)
       const collector = m.createMessageComponentCollector({
-        componentType: "SELECT_MENU",
+        componentType: Discord.ComponentType.SelectMenu,
         time: 30000
       })
       collector.on("collect", async (select) => {
@@ -142,7 +142,7 @@ module.exports = {
     })
     async function update(m) {
       team = await userTeam(message.member.id, message.guild.id)
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
         .setAuthor({ name: `🗽 Panel de modification de la team ${team.name}` })
         .setDescription(`✏️ **Nom:** ${team.name ? team.name : "Aucun"}\n📃 **Description:** ${team.desc ? team.desc : "Aucune"}${team.rep > logprice ? `\n👥 **Logo:** ${team.logo ? `[Logo URL](${team.logo})` : "Aucun"}` : ""}${team.rep > bannerprice ? `\n🌄 **Banner:** ${team.banner ? `[Banner URL](${team.banner})` : "Aucune"}` : ""}`)
         .setColor(data.color)

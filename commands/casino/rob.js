@@ -14,20 +14,20 @@ module.exports = {
         let cool = await setCooldown(message, data.color, user.id, message.guild.id, "antirob", 7200000, true, true)
         if (!cool[0] && cool !== true && cool.length && cool[1] !== undefined) {
             
-            let timeEmbed = new Discord.MessageEmbed()
+            let timeEmbed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:shield: Vous ne pouvez pas rob cet utilisateur\n\n Son anti-rob prendra fin dans ${cool[1]} `)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
             return message.reply({ embeds: [timeEmbed], allowedMentions: { repliedUser: false } })
         } else {
             if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "rob", 3600000, true))) return
-            let moneyEmbed0 = new Discord.MessageEmbed()
+            let moneyEmbed0 = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: Vous ne pouvez pas vous rob vous-même !`)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
             if (message.author.id === user.user.id) return message.reply({ embeds: [moneyEmbed0], allowedMentions: { repliedUser: false } })
 
-            let moneyEmbed2 = new Discord.MessageEmbed()
+            let moneyEmbed2 = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:x: ${user.user.username} n'a pas d'argent à voler !`)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -37,7 +37,7 @@ module.exports = {
             if (!(await setCooldown(message, data.color, message.author.id, message.guild.id, "rob", 3600000))) return
             const checkif = between(0, 3)
             if (checkif === 2) {
-                let fail = new Discord.MessageEmbed()
+                let fail = new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(` Vous n'avez pas réussi à rob ${user.user.username} !`)
                     .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -46,7 +46,7 @@ module.exports = {
 
             let random = between(1, parseInt(targetuser.Coins))
 
-            let embed = new Discord.MessageEmbed()
+            let embed = new Discord.EmbedBuilder()
                 .setDescription(`:white_check_mark: Vous avez volé ${user} et repartez avec \`${random} coins\` en plus`)
                 .setColor(data.color)
                 .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })

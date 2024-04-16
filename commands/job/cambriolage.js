@@ -16,7 +16,7 @@ module.exports = {
             let cool = await setCooldown(message, data.color, user.id, message.guild.id, "antirob", 7200000, true, true)
             if (!cool[0] && cool !== true && cool.length) {
 
-                let timeEmbed = new Discord.MessageEmbed()
+                let timeEmbed = new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:shield: Vous ne pouvez pas cambrioler cet utilisateur\n\n Son anti-rob prendra fin dans ${cool[1]} `)
                     .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })
@@ -30,7 +30,7 @@ module.exports = {
                     total = maxentrepot
                 }
 
-                let moneyEmbed2 = new Discord.MessageEmbed()
+                let moneyEmbed2 = new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:x: **${user.user.username}** n'a rien ou pas assez à cambrioler (${total}) !`)
                     .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) });
@@ -41,7 +41,7 @@ module.exports = {
                 const checkif = between(1, 3)
                 if (checkif === 2) {
                     return message.channel.send({
-                        embeds: [new Discord.MessageEmbed()
+                        embeds: [new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:city_sunset: Vous n'avez pas réussi à cambrioler **${user.user.username}** !`)
                             .setImage('https://i.gifer.com/J9pS.gif')
@@ -51,7 +51,7 @@ module.exports = {
                 let random = between(100, parseInt(total))
 
 
-                let embed = new Discord.MessageEmbed()
+                let embed = new Discord.EmbedBuilder()
                     .setDescription(`:white_check_mark: Vous avez cambriolé ${user} et repartez avec \`${random} coins\` en plus`)
                     .setColor(data.color)
                     .setImage('https://i.gifer.com/A3Gz.gif')
@@ -67,7 +67,7 @@ module.exports = {
 
         } else {
             return message.channel.send({
-                embeds: [new Discord.MessageEmbed()
+                embeds: [new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:x: Vous devez être **cambrioleur** pour utiliser cette commande !`)]
             })

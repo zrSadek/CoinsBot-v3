@@ -17,7 +17,7 @@ module.exports = {
     if (!opponent || opponent.bot) return message.reply({ content: ":x: `ERROR:` Pas de membre trouvé !", allowedMentions: { repliedUser: false } });
 
     let mise = args[1];
-    let moneymore = new Discord.MessageEmbed()
+    let moneymore = new Discord.EmbedBuilder()
       .setColor(data.color) 
       .setDescription(`:x: Vous n'avez pas assez !`);
 
@@ -53,12 +53,12 @@ module.exports = {
       return message.channel.send(`:x: Vous avez déjà lancé un jeu ! Veuillez attendre la fin de celui-ci !`);
     }
 
-    const row = new Discord.MessageActionRow()
+    const row = new Discord.ActionRowBuilder()
       .addComponents(
-        new Discord.MessageButton()
+        new Discord.ButtonBuilder()
           .setCustomId('valide')
           .setLabel('✅')
-          .setStyle('SUCCESS'),
+          .setStyle(Discord.ButtonStyle.Success),
       );
 
     message.channel.send({ content: `:question: <@${opponent.user.id}> (puissance: ${membercards.vie + membercards.defense + membercards.attaque}/150) acceptes-tu le duel de **Card** avec une mise de ${mise} coins contre <@${message.author.id}> (puissance: ${propriocards.vie + propriocards.defense + propriocards.attaque}/150) ?\n\n_Tu as 30 secondes pour accepter_`, components: [row] }).then(async msg => {
@@ -98,7 +98,7 @@ module.exports = {
           result.opponent.vie = membercards.vie;
 
           function round() {
-            const embed = new Discord.MessageEmbed();
+            const embed = new Discord.EmbedBuilder();
 
             setTimeout(() => {
               embed.setTitle(positions.three);

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const getUser = require("../../base/functions/getUser");
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
     const user = await getUser(member.user.id, message.guild.id);
     const totalrep = user.Rep || 0;
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setAuthor({name: member.user.username, iconURL: member.user.displayAvatarURL({ dynamic: true })})
       .setDescription(`**${member.user.username}** a
 :coin: **${user.Coins}** coins en poche

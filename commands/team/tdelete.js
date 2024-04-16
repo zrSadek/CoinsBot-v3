@@ -14,10 +14,10 @@ module.exports = {
       authorteam = await userTeam(member.id, message.guild.id)
     } else authorteam = await userTeam(false, message.guild.id, args[0])
     if (!authorteam) return message.channel.send(`:x: Team introuvable !`)
-    let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('yes').setEmoji("✅").setLabel(`Oui je veux supprimer la team`)
-    let button_no = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('no').setEmoji("❌").setLabel(`Non je ne veux pas supprimer la team`)
+    let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('yes').setEmoji("✅").setLabel(`Oui je veux supprimer la team`)
+    let button_no = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('no').setEmoji("❌").setLabel(`Non je ne veux pas supprimer la team`)
 
-    let button_row = new Discord.MessageActionRow().addComponents([button_back, button_no])
+    let button_row = new Discord.ActionRowBuilder().addComponents([button_back, button_no])
     let finallb = Object.entries(JSON.parse(authorteam.members))
     return message.channel.send({
       content: `:question: Êtes-vous sûr de vouloir supprimer la team ${authorteam.name} (${authorteam.teamid}) ?\n${finallb.length > 1 ? "👥" : "👤"} Elle contient ${finallb.length} membres `,
@@ -26,7 +26,7 @@ module.exports = {
     }).then(m => {
 
       const collector = m.createMessageComponentCollector({
-        componentType: "BUTTON",
+        componentType: Discord.ComponentType.Button,
         time: 30000
       })
       collector.on("collect", async (i) => {

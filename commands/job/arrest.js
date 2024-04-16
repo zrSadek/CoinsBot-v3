@@ -11,7 +11,7 @@ module.exports = {
             if (memberDB.Capacite === "blanchisseur" || memberDB.Capacite === "cultivateur") {
                 message.delete().catch(e => { })
                 message.channel.send({
-                    embeds: [new Discord.MessageEmbed()
+                    embeds: [new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`:x: Vous ne pouvez pas utiliser cette commande en ayant votre capacité actuel !`)
                         .setFooter({ text: `Commande Anonyme` })]
@@ -24,7 +24,7 @@ module.exports = {
             let drugs = targetuser.Drugs
             if (!drugs || drugs <= 0) {
                 return message.reply({
-                    embeds: [new Discord.MessageEmbed()
+                    embeds: [new Discord.EmbedBuilder()
                         .setColor(data.color)
                         .setDescription(`👮 **${user.user.username}** n'est ni blanchisseur et ne possède pas de :pill: !`)
                         .setImage('https://i.pinimg.com/originals/ec/3d/19/ec3d19337b4f134cf066be5586cf86b2.gif')
@@ -33,7 +33,7 @@ module.exports = {
             }
             let gain = drugs * 500
             let usermetier = targetuser.Capacite
-            let embed = new Discord.MessageEmbed()
+            let embed = new Discord.EmbedBuilder()
                 .setDescription(`👮 Vous arrêté ${user} qui détenait \`${drugs} 💊\`, vous venez de remporter \`${gain} coins\` !
                             ${usermetier === "blanchisseur" ? `Le joueur était aussi blanchisseur, sa capacité lui a été retiré !` : ""}${usermetier === "cultivateur" ? `Le joueur était aussi cultivateur, sa capacité lui a été retiré !` : ""}`)
                 .setColor(data.color)
@@ -46,7 +46,7 @@ module.exports = {
 
         } else {
             return message.channel.send({
-                embeds: [new Discord.MessageEmbed()
+                embeds: [new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:x: Vous devez être **policier** pour utiliser cette commande !`)]
             })

@@ -27,8 +27,8 @@ module.exports = {
       return message.reply(`:x: Vous n'avez pas de carte, voici les salons où les cartes sont drop aléatoirement: ${chan} !`);
     }
 
-    let buttontrash = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('trash').setEmoji("🗑️");
-    let button_row = new Discord.MessageActionRow().addComponents([buttontrash]);
+    let buttontrash = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('trash').setEmoji("🗑️");
+    let button_row = new Discord.ActionRowBuilder().addComponents([buttontrash]);
 
     let pages = [];
     let currentPage = 0;
@@ -52,7 +52,7 @@ module.exports = {
         });
 
         const collector = msg.createMessageComponentCollector({
-          componentType: "BUTTON",
+          componentType: Discord.ComponentType.Button,
           time: 150000
         });
 
@@ -80,8 +80,8 @@ module.exports = {
             msg.edit({ embeds: [pages[currentPage].embed] });
           } else if (interaction.customId.startsWith('trash-')) {
             let cardName = interaction.customId.split("-")[1];
-            let button = new Discord.MessageButton().setStyle('PRIMARY').setCustomId(`check-${cardName}`).setEmoji("✅");
-            let buttonRow = new Discord.MessageActionRow().addComponents([button]);
+            let button = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId(`check-${cardName}`).setEmoji("✅");
+            let buttonRow = new Discord.ActionRowBuilder().addComponents([button]);
 
             msg.edit({ content: `:question: Êtes-vous sûr de vouloir jeter la carte **${cardName}** ?\nAction irréversible, cette carte sera de nouveau drop plus tard !`, embeds: [], components: [buttonRow], files: [] });
           } else if (interaction.customId.startsWith('check-')) {
@@ -105,7 +105,7 @@ module.exports = {
     async function pagination(card) {
       const attachment = await generateCanva(card, card.name, data.color);
 
-      const embed = new Discord.MessageEmbed()
+      const embed = new Discord.EmbedBuilder()
         .setTitle(card.name)
         .setAuthor(`Voici votre carte`)
         .addFields([

@@ -43,7 +43,7 @@ module.exports = {
         const option = options.find(opt => opt.key === args[0]);
 
         if (!option) {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setTitle(`Informations des logs`)
                 .setDescription(
@@ -67,7 +67,7 @@ module.exports = {
         if (ActualLogs[fetchKey] == channel.id) {
             delete ActualLogs[fetchKey]
             await data.guilds.update({ Logs: ActualLogs }, { where: { guildId: message.guild.id }});
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(option.successMessage);
 
@@ -77,7 +77,7 @@ module.exports = {
         ActualLogs[fetchKey] = channel.id
         await data.guilds.update({ Logs: ActualLogs }, { where: { guildId: message.guild.id }});
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setDescription(`:gear: Le salon <#${channel.id}> est maintenant définit comme **${option.description}**`);
 

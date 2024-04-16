@@ -10,10 +10,10 @@ module.exports = {
 
         if (!args[0]) {
 
-            let button_next = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('next').setEmoji("▶️")
-            let button_back = new Discord.MessageButton().setStyle('PRIMARY').setCustomId('back').setEmoji("◀️")
+            let button_next = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('next').setEmoji("▶️")
+            let button_back = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('back').setEmoji("◀️")
 
-            let button_row = new Discord.MessageActionRow().addComponents([button_back, button_next])
+            let button_row = new Discord.ActionRowBuilder().addComponents([button_back, button_next])
             const subFolders = fs.readdirSync('././commands')
 
             let gains = data.guild.Gains || {}
@@ -21,7 +21,7 @@ module.exports = {
             let streamgain = gains.streamgain || 0
             let camgain = gains.camgain || 0
 
-            let page0 = embed(':bust_in_silhouette: **• Serveur Informations**', `> :loud_sound: Vous gagnez \`${voicegain} coins\` toutes les 15 minutes lorsque vous êtes en vocal \n> :movie_camera: Vous gagnez \`${streamgain} coins\` lorsque vous êtes en stream \n> :video_camera: Et vous gagnez \`${camgain} coins\` lorsque vous activez votre caméra !\n\n[\`Support du bot\`](https://discord.gg/CuRTzZMfYw)  |  [\`Lien pour m'ajouter\`](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8) | [\`Vote pour CoinsBot\`](https://top.gg/bot/874400416731922432/vote)\n\n_Appuyez sur les flèches ci-dessous pour changer de page !_`, undefined)
+            let page0 = embed(':bust_in_silhouette: **• Serveur Informations**', `> :loud_sound: Vous gagnez \`${voicegain} coins\` toutes les 15 minutes lorsque vous êtes en vocal \n> :movie_camera: Vous gagnez \`${streamgain} coins\` lorsque vous êtes en stream \n> :video_camera: Et vous gagnez \`${camgain} coins\` lorsque vous activez votre caméra !\n\n[\`Support du bot\`](https://discord.gg/uhq)  |  [\`Lien pour m'ajouter\`](https://discord.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=8) | [\`Vote pour CoinsBot\`](https://top.gg/bot/874400416731922432/vote)\n\n_Appuyez sur les flèches ci-dessous pour changer de page !_`, undefined)
             let page1 = embed(':moneybag:  **• Casino**', undefined, subFolders[3])
             let page2 = embed(':game_die: **• Jeux**', undefined, subFolders[5])
             let page3 = embed(':black_joker: **• Cartes**', undefined, subFolders[2])
@@ -48,14 +48,14 @@ module.exports = {
 
 
             let apage = 0
-            page[apage].setFooter({ text: `©️ CoinsBot | By milleniumishere` })
+            page[apage].setFooter({ text: `©️ CoinsBot | By Ruwin & Karma & milleniumishere` })
             await message.reply({
                 embeds: [page[apage]],
                 components: [button_row],
                 allowedMentions: { repliedUser: false }
             }).then(async msg => {
                 const collector = msg.createMessageComponentCollector({
-                    componentType: "BUTTON",
+                    componentType: Discord.ComponentType.Button,
                     time: 150000
                 })
                 collector.on("collect", async (i) => {
@@ -66,7 +66,7 @@ module.exports = {
                         if (apage >= page.length - 1) { apage = 0 } else {
                             apage++
                         }
-                        page[apage].setFooter({ text: `Page ${apage + 1}/${page.length} | By milleniumishere`, iconURL: client.user.displayAvatarURL() })
+                        page[apage].setFooter({ text: `Page ${apage + 1}/${page.length} | By By Ruwin & Karma & milleniumishere`, iconURL: client.user.displayAvatarURL() })
                         msg.edit({ embeds: [page[apage]] })
                     }
 
@@ -74,7 +74,7 @@ module.exports = {
                         if (apage <= 0) { apage = page.length - 1 } else {
                             apage--
                         }
-                        page[apage].setFooter({ text: `Page ${apage + 1}/${page.length} | By milleniumishere`, iconURL: client.user.displayAvatarURL() })
+                        page[apage].setFooter({ text: `Page ${apage + 1}/${page.length} | By By Ruwin & Karma & milleniumishere`, iconURL: client.user.displayAvatarURL() })
                         msg.edit({ embeds: [page[apage]] })
                     }
                 })
@@ -95,14 +95,14 @@ module.exports = {
                         array.push(`\`${data.guild.Prefix}${command.usage ? command.usage : command.name}\`\n**${command.description}**`)
                     }
                 }
-                return new Discord.MessageEmbed()
+                return new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setTitle(title ? title : "Aucun auteur pour l'embed !")
-                    .setImage(image ? image : "")
+                    .setImage(image ? image : null)
                     .setDescription(description ? `Utilisez \`${data.guild.Prefix}help [commande]\` pour obtenir des informations sur une commande\n\n` + description : category && array.length > 0 ? `Utilisez \`${data.guild.Prefix}help [commande]\` pour obtenir des informations sur une commande\n\n` + array.map(e => e).join("\n\n") : "Pas de description précisée")
             }
         } else {
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
 
                 .setAuthor({ name: "Page d'aide de la commande " + args[0], iconURL: "https://cdn.discordapp.com/attachments/851876715835293736/852647593020620877/746614051601252373.png" })
@@ -115,7 +115,7 @@ module.exports = {
           ** Description -** [    \`${command.description || "Pas de description renseignée."}\`   ]\n
           ** Usage -** [   \`${command.usage ? `\`${command.usage}\`` : "Pas d'utilisation conseillée"}\`   ]\n
           ** Aliases -** [   \`${command.aliases ? command.aliases.join(" , ") : "Aucun"}\`   ]`)
-            embed.setFooter({ text: `©️ E-Gestion | By milleniumishere` })
+            embed.setFooter({ text: `©️ E-Gestion | By By Ruwin & Karma & milleniumishere` })
 
             return message.channel.send({ embeds: [embed] })
         }

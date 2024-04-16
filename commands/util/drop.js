@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton, Message } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Message } = require('discord.js');
 const color = require('../../base/functions/color');
 const addCoins = require('../../base/functions/addCoins');
 const { verifnum } = require('../../base/functions');
@@ -21,9 +21,9 @@ module.exports = {
 
     message.channel.send(`*Drop lancé dans ${channel}*`);
 
-    let button = new MessageButton().setStyle('PRIMARY').setCustomId('claim').setLabel('Lancement en cours...').setDisabled(true)
-    let button_row = new MessageActionRow().addComponents([button])
-    const Embed = new MessageEmbed()
+    let button = new ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId('claim').setLabel('Lancement en cours...').setDisabled(true)
+    let button_row = new ActionRowBuilder().addComponents([button])
+    const Embed = new EmbedBuilder()
       .setTitle(`🎉 Un colis tombe du ciel !`)
       .setColor(embedColor)
       .setDescription(`Cliques sur le boutton ci-dessous pour l'attraper et gagner \`${gain} coins\``)
@@ -42,7 +42,7 @@ module.exports = {
           button_row.components[0].setLabel("Go !").setEmoji('🏆').setDisabled(false)
           msg.edit({ embeds: [Embed], components: [button_row] })
           const collector = msg.createMessageComponentCollector({
-            componentType: "BUTTON",
+            componentType: Discord.ComponentType.Button,
             time: 60000
           })
           collector.on("collect", async (i) => {
@@ -54,7 +54,7 @@ module.exports = {
 
           collector.on("end", async () => {
             button_row.components[0].setDisabled(true);
-            const Embedd = new MessageEmbed()
+            const Embedd = new EmbedBuilder()
               .setTitle(`Drop terminé`)
               .setColor(embedColor)
             return msg.edit({ embeds: [Embedd], components: [button_row] }).catch(() => { })

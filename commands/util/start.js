@@ -13,9 +13,9 @@ module.exports = {
 
     run: async (client, message, args, data) => {
         const embedColor = await color(message.member.id, message.guild.id, client, false)
-        const row = new Discord.MessageActionRow()
+        const row = new Discord.ActionRowBuilder()
             .addComponents(
-                new Discord.MessageSelectMenu()
+                new Discord.StringSelectMenuBuilder()
                     .setCustomId('select')
                     .setPlaceholder('Modifier un paramètre')
                     .addOptions([
@@ -55,7 +55,7 @@ module.exports = {
 
         const msg_filter = (m) => m.author.id === message.author.id & !m.author.bot
 
-        const embed = new Discord.MessageEmbed()
+        const embed = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle('Panel de l\'enchère')
             .setThumbnail("https://media.discordapp.net/attachments/1002173915549937715/1127499599293198366/3d-illustration-of-auction-document-png.png")
@@ -69,7 +69,7 @@ module.exports = {
         })
 
         const collector = msgembed.createMessageComponentCollector({
-            componentType: "SELECT_MENU",
+            
             time: 250000
         })
 
@@ -169,10 +169,10 @@ module.exports = {
                 let enchereTime = parseInt((Date.now() + parseHuman(time)) / 1000)
                 let cout = price
                 const durationms = parseHuman(time)
-                const button = new Discord.MessageButton().setStyle('PRIMARY').setCustomId("chargement").setEmoji("🎉").setLabel(`Chargement...`).setDisabled(true)
-                const button_row = new Discord.MessageActionRow().addComponents([button])
+                const button = new Discord.ButtonBuilder().setStyle(Discord.ButtonStyle.Primary).setCustomId("chargement").setEmoji("🎉").setLabel(`Chargement...`).setDisabled(true)
+                const button_row = new Discord.ActionRowBuilder().addComponents([button])
 
-                const embed = new Discord.MessageEmbed()
+                const embed = new Discord.EmbedBuilder()
                     .setTitle(prize)
                     .setImage("https://media.discordapp.net/attachments/1002173915549937714/1051031533256982558/Ventes-aux-encheres-de-destockage.png?width=1440&height=613")
                     .setDescription(`
@@ -222,7 +222,7 @@ module.exports = {
             let price = config.price || ":x:"
 
 
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setThumbnail("https://media.discordapp.net/attachments/1002173915549937715/1127499599293198366/3d-illustration-of-auction-document-png.png")
                 .setTitle('Panel de l\'enchère')

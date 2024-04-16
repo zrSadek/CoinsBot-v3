@@ -7,7 +7,6 @@ module.exports = {
 
   run: async (client) => {
     const { default_prefix, owner, id } = client.config
-    console.log(id)
     const botDB = await Bots.findOne({
       where: { id: id }
     });
@@ -55,6 +54,7 @@ module.exports = {
     await client.guilds.cache.forEach(async g => {
 
       let guildDB = await checkGuild(client.user.id, g.id)
+
       let gains = guildDB.Gains || {}
       let minimum = gains.dmin || 1000
       let maximum = gains.dmax || 3000

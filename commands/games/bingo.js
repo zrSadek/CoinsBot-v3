@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const { parseHuman } = require("human-ms");
 const color = require('../../base/functions/color');
 const { verifnum, msToTime, between } = require('../../base/functions');
@@ -32,9 +32,9 @@ module.exports = {
         if (!channel && channel !== "none") return message.channel.send(":x: Je ne trouve pas ce salon | Exemple: \`bingo 500 5m 100\`");
 
         message.channel.send(`*Bingo lancé dans ${channel}*`);
-        const embed = new MessageEmbed()
+        const embed = new EmbedBuilder()
             .setTitle("[BINGO] Trouvez le bon nombre !")
-            .setImage(embedColor)
+            .setColor(embedColor)
             .setDescription(`_ Vous avez ${msToTime(dure)} pour trouver le bon chiffre_\n\n# Le chiffre est compris entre 1 et ${numbermax}`)
             .setFooter({text: `Le gagnant remportera ${gain} coins !`})
             .setImage("https://media.discordapp.net/attachments/1002173915549937714/1130516154675376229/signe-de-nC3A9on-de-bingo-avec-des-boules-et-des-C3A9toiles-de-loterie.png");

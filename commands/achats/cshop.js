@@ -11,9 +11,9 @@ module.exports = {
         client.queue.addJob(async (cb) => {
             let shop = data.guild.cshop || {}
             if (Object.keys(shop).length > 0) {
-                const roww = new Discord.MessageActionRow()
+                const roww = new Discord.ActionRowBuilder()
                     .addComponents(
-                        new Discord.MessageSelectMenu()
+                        new Discord.StringSelectMenuBuilder()
                             .setCustomId('select')
                             .setPlaceholder('Sélectionner un item à acheter')
                     );
@@ -40,18 +40,18 @@ module.exports = {
                 }
                 memberarray.forEach((chunk, i) => embeds[i] = chunk);
 
-                const row = new Discord.MessageActionRow().addComponents([
-                    new Discord.MessageButton()
-                        .setStyle('PRIMARY')
+                const row = new Discord.ActionRowBuilder().addComponents([
+                    new Discord.ButtonBuilder()
+                        .setStyle(Discord.ButtonStyle.Primary)
                         .setEmoji('⬅️')
                         .setCustomId('left'),
-                    new Discord.MessageButton()
-                        .setStyle('PRIMARY')
+                    new Discord.ButtonBuilder()
+                        .setStyle(Discord.ButtonStyle.Primary)
                         .setEmoji('➡️')
                         .setCustomId('right'),
                 ])
 
-                let embed = new Discord.MessageEmbed()
+                let embed = new Discord.EmbedBuilder()
                 embed.setTitle(`${difarr.length > 1 ? `Voici la liste des items du serveur (${difarr.length})` : `Voici l'item du serveur (1)`}`)
                 embed.setColor(data.color)
                 embed.setFooter({ text: `Page ${page + 1}/${memberarray.length}` })
@@ -66,7 +66,7 @@ module.exports = {
                 }).then(messages => {
 
                     const collector = messages.createMessageComponentCollector({
-                        componentType: "BUTTON",
+                        componentType: Discord.ComponentTypeButton,
                         time: 120000,
                     })
                     collector.on("collect", async (interaction) => {
@@ -100,7 +100,7 @@ module.exports = {
 
                     });
                     const collectorr = messages.createMessageComponentCollector({
-                        componentType: "SELECT_MENU",
+                        componentsType: Discord.ComponentType.SelectMenu,
                         time: 120000
                     })
                     collectorr.on("collect", async (select) => {
@@ -113,7 +113,7 @@ module.exports = {
                         let bal = (await getUser(message.member.id, message.guild.id)).Coins
                         if (!item) { message.reply({ content: ":x: Cet item n'existe pas !", allowedMentions: { repliedUser: false } }); return }
 
-                        const moneymore = new Discord.MessageEmbed()
+                        const moneymore = new Discord.EmbedBuilder()
                             .setColor(data.color)
                             .setDescription(`:x: Vous n'avez pas assez de coins`)
                             .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })

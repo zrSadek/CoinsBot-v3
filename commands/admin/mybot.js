@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { Bots } = require("../../base/Database/Models/Bots");
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
       let dba = ownerBots.map(i => i)
       if (!dba || dba.length < 1) { message.channel.send(":x: Vous n'avez aucun bot"); }
 
-      const embed = new MessageEmbed()
+      const embed = new EmbedBuilder()
         .setTitle('Vos bots')
         .setDescription(`${(await Promise.all(dba.map(async (user) => {
           const botUser = await client.users.fetch(user.botid);

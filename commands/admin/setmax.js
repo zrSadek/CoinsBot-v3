@@ -9,7 +9,7 @@ module.exports = {
     let key = args[0].toLowerCase()
     if (key === 'entrepot') {
       if (!verifnum(args[1])) return message.channel.send(`:x: Ceci n'est pas un chiffre valide !`)
-      let Embed = new Discord.MessageEmbed()
+      let Embed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:file_cabinet: Le stockage maximum de l'**entrepot** a été modifié en ` + args[1]);
       ActualMax["entrepot"] = Number(args[1]);
@@ -17,7 +17,7 @@ module.exports = {
       message.reply({ embeds: [Embed] })
 
     } else {
-      let Embed = new Discord.MessageEmbed()
+      let Embed = new Discord.EmbedBuilder()
         .setTitle(`:coin: Configuration du stockage`)
         .setColor(data.color)
         .setDescription(`Pour changer le maximum de stockage de l'entrepot :\n\`${data.guild.Prefix}setmax <entrepot> <gain>\``);

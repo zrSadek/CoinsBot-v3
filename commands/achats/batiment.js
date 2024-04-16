@@ -40,9 +40,9 @@ module.exports = {
     let cinq = ":red_square:"
     if (total > maxentrepot / 5 * 5 - 1) cinq = ":blue_square:"
 
-    const row = new Discord.MessageActionRow()
+    const row = new Discord.ActionRowBuilder()
       .addComponents(
-        new Discord.MessageSelectMenu()
+        new Discord.StringSelectMenuBuilder()
           .setCustomId('select')
           .setPlaceholder('Faire une action')
           .addOptions([
@@ -61,7 +61,7 @@ module.exports = {
           ]),
       );
 
-    let moneyEmbed = new Discord.MessageEmbed()
+    let moneyEmbed = new Discord.EmbedBuilder()
       .setColor(data.color)
       .setAuthor({ name: `Argent dans votre entrepôt: ${total ? total : 0} / ${maxentrepot}` })
       .setThumbnail('https://play-lh.googleusercontent.com/XMpaHMNeySpMO8MAGmkMd0GB0E27hjsai5uKAushFMf8SYcJ_xucp5WUQ2x-ACOUZJ-i')
@@ -81,7 +81,7 @@ _Utilisez la commande \`buy\` pour acheter un ou plusieurs batiments !_`)
     }).then(m => {
 
       const collector = m.createMessageComponentCollector({
-        componentType: "SELECT_MENU",
+        componentType: Discord.ComponentType.SelectMenu,
         time: 50000
       })
       collector.on("collect", async (select) => {
@@ -96,7 +96,7 @@ _Utilisez la commande \`buy\` pour acheter un ou plusieurs batiments !_`)
           await Users.update({ Entrepot: 0 }, { where: { primary: memberDB.primary } });
           memberDB.increment('Coins', { by: total });
           message.channel.send({
-            embeds: [new Discord.MessageEmbed()
+            embeds: [new Discord.EmbedBuilder()
               .setColor(data.color)
               .setThumbnail('https://media.discordapp.net/attachments/1002173915549937715/1028683967710380072/unknown.png')
               .setDescription(`:coin: \`${total} coins\` ont été retiré de votre entrepôt !`)
@@ -161,7 +161,7 @@ _Utilisez la commande \`buy\` pour acheter un ou plusieurs batiments !_`)
         batarray.push(`**${i}:** ${bats[i] ? "Possédé" : "Non Possédé"}`)
       }
       m.edit({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setThumbnail('https://play-lh.googleusercontent.com/XMpaHMNeySpMO8MAGmkMd0GB0E27hjsai5uKAushFMf8SYcJ_xucp5WUQ2x-ACOUZJ-i')
           .setAuthor({ name: `Argent dans votre entrepôt: ${total ? total : 0} / ${maxentrepot}` })

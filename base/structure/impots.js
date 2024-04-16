@@ -36,7 +36,7 @@ module.exports = {
                                 let lchannel = (guildDB.Logs||{})["impots"]
                                 let asend = guild.channels.cache.get(lchannel)
                                 if (asend) {
-                                    asend.send({ embeds: [new Discord.MessageEmbed().setColor('#0B19F5').setAuthor({ name: team.name }).setDescription(`La team ${team.name} vient de payer \`${impots} coins\` d'impôt pour héberger ses ${finallb} membres !`).setTimestamp()] })
+                                    asend.send({ embeds: [new Discord.EmbedBuilder().setColor('#0B19F5').setAuthor({ name: team.name }).setDescription(`La team ${team.name} vient de payer \`${impots} coins\` d'impôt pour héberger ses ${finallb} membres !`).setTimestamp()] })
                                     await wait(1000)
                                 }
                             }

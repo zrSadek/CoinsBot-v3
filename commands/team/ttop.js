@@ -33,7 +33,7 @@ module.exports = {
             let result =  finalLb || "Aucune team dans le classement !"
             /*let finallb = teams.map((value, index) => `${`${(index + 1)}`.replace("1", "🥇").replace("2", "🥈").replace("3", "🥉")} ) **${value.name}** (id: ${value.teamid}) \n┖ \`${value.coins} coins\``).join("\n")
             if (finallb.length < 1) finallb = "Aucune team dans le classement !"*/
-            const embed = new Discord.MessageEmbed()
+            const embed = new Discord.EmbedBuilder()
                 .setAuthor({ name: `Leaderboard des team sur ${message.guild.name}`, iconURL: message.guild.iconURL({ dynamic: true }) })
                 .setDescription(`${result}`)
                 .setColor(data.color)

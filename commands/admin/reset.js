@@ -15,7 +15,7 @@ module.exports = {
     let dureefiltrer = response => { return response.author.id === message.author.id };
     if (!args[0]) {
       return message.reply({
-        embeds: [new Discord.MessageEmbed()
+        embeds: [new Discord.EmbedBuilder()
           .setColor(data.color)
           .setDescription(`\`reset all\` : Reset l'économie du serveur
 \`reset user\` : Reset l'économie d'un utilisateur
@@ -38,7 +38,7 @@ module.exports = {
               }
             });
             message.reply({
-              embeds: [new Discord.MessageEmbed()
+              embeds: [new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`🃏 Les cartes ont été reset !`)
                 .setFooter({ text: `${message.member.user.username}`, icon: `${message.member.user.displayAvatarURL({ dynamic: true })}` })]
@@ -80,7 +80,7 @@ module.exports = {
                 });
 
                 message.channel.send({
-                  embeds: [new Discord.MessageEmbed()
+                  embeds: [new Discord.EmbedBuilder()
                     .setColor(data.color)
                     .setDescription(`:coin: L'économie actuelle de ${user} a bien été reset !`)
                     .setFooter({ text: `${message.member.user.username}`, icon: `${message.member.user.displayAvatarURL({ dynamic: true })}` })]
@@ -98,7 +98,7 @@ module.exports = {
             message.channel.send(`:recycle: Reset en cours...`)
             await data.users.destroy({ where: { GuildId: message.guild.id } });
             message.reply({
-              embeds: [new Discord.MessageEmbed()
+              embeds: [new Discord.EmbedBuilder()
                 .setColor(data.color)
                 .setDescription(`:coin: L'économie actuelle a bien été reset \nLes configurations n'ont pas été modifiés durant le reset `)
                 .setFooter({ text: `${message.member.user.username}`, icon: `${message.member.user.displayAvatarURL({ dynamic: true })}` })]

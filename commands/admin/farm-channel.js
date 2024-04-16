@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { EmbedBuilder } = require("discord.js");
 const { verifnum } = require("../../base/functions");
 
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
       channels = Object.keys(channels).map(key => [key, channels[key]]); 
       let page = Math.round(channels.length / 10 + 1)
       for (let i = 1; i < page + 1; i++) {
-        const embeddd = new MessageEmbed()
+        const embeddd = new EmbedBuilder()
           .setDescription(channels.length>0 ? list((i - 1) * 10, i * 10) : "Tous les salons sont définis comme salon de farm")
           .setTitle(`:loud_sound: Configuration des vocaux farm`)
           .setColor(data.color)

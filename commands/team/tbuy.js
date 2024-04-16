@@ -19,7 +19,7 @@ module.exports = {
     if (args[0] == 'info' || !args[0]) {
 
 
-      let Embed2 = new Discord.MessageEmbed()
+      let Embed2 = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setTitle(`Voici la boutique des teams du serveur ` + message.guild.name)
         .setDescription(`**cadena**\nPrix: ${cprice} rep`)
@@ -28,7 +28,7 @@ module.exports = {
 
     } else if (args[0] == 'cadena' || args[0] == 'cadenas') {
 
-      let Embed = new Discord.MessageEmbed()
+      let Embed = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:x: La team a besoin de ${cprice} rep pour acheter un **cadena**`);
       if (team.rep < cprice) return message.reply({ embeds: [Embed], allowedMentions: { repliedUser: false } })
@@ -37,7 +37,7 @@ module.exports = {
       if (team.cadenas >= 5) return message.channel.send(`:x: La team a atteint sa limite de **cadenas**`)
 
 
-      let Embed2 = new Discord.MessageEmbed()
+      let Embed2 = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(`:white_check_mark: Vous avez acheté un **cadena** pour \`${cprice} rep team\``);
         await team.increment('cadenas', { by: 1 });
@@ -45,7 +45,7 @@ module.exports = {
       message.reply({ embeds: [Embed2], allowedMentions: { repliedUser: false } })
 
     } else {
-      let embed3 = new Discord.MessageEmbed()
+      let embed3 = new Discord.EmbedBuilder()
         .setColor(data.color)
         .setDescription(':x: Entrez un batiment à acheter !\nPour plus d\'informations utilisez la commande \`buy info\`')
         .setFooter({ text: `${message.member.user.username}`, iconURL: message.member.user.displayAvatarURL({ dynamic: true }) })

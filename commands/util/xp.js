@@ -35,7 +35,7 @@ module.exports = {
             "xp.png",
         )
 
-        let embed = new Discord.MessageEmbed()
+        let embed = new Discord.EmbedBuilder()
             .setColor(data.color)
             .setTitle(`Palier de ` + member.user.username + `:`)
             .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))

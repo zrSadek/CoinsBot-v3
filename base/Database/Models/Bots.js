@@ -43,7 +43,7 @@ const Bots = BotsInstance.define('Bots', {
 	},
 	activity: {
 		type: sequelize.STRING,
-	},
+	},// regarde discor
 	activitytype: {
 		type: sequelize.STRING,
 	},
@@ -62,6 +62,10 @@ const Bots = BotsInstance.define('Bots', {
         type: sequelize.JSON,
         defaultValue: {}
     },
+	createdAt: {
+		type: sequelize.STRING(100),
+		allowNull: true,
+	},
 });
 
 
