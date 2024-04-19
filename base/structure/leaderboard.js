@@ -15,7 +15,7 @@ module.exports = {
                         const message = await client.channels.cache.get(db.get(`leaderboard_${guild.id}`)).messages.fetch(db.get(`msgleaderboard_${guild.id}`)).catch(e => { console.log(e) })
                         if (message) {
                             let main = new Discord.ButtonBuilder().setLabel('Top Main').setStyle(Discord.ButtonStyle.Success).setCustomId('main')
-                            let bank = new Discord.ButtonBuilder().setLabel('Top Banque').setStyle('DANGER').setCustomId('banque')
+                            let bank = new Discord.ButtonBuilder().setLabel('Top Banque').setStyle(Discord.ButtonStyle.Danger).setCustomId('banque')
                             let rep = new Discord.ButtonBuilder().setLabel('Top Rep').setStyle(Discord.ButtonStyle.Secondary).setCustomId('rep')
 
 
